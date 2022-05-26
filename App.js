@@ -8,6 +8,7 @@ import {
   } from 'react-native';
 
 const App = () => {
+  hello
 
   return (
     <View style={styles.body}>      

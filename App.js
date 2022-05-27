@@ -24,6 +24,8 @@ export function ChatsPageTab() {
     
     <Tab.Navigator
       screenOptions={({route})=> ({
+        headerTransparent: true,
+        headerTitle: " ",
         tabBarIcon: ({focused, size, color}) => {
           let iconName;
           if(route.name==='SearchPage') {

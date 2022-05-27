@@ -1,20 +1,22 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
+import React, {useState} from 'react';
+import { 
+  StyleSheet, 
   Text,
+  View,
   Pressable,
-  Image, 
-  
-} from 'react-native';
+  Image,
+  TextInput
+  } from 'react-native';
 
-export default function loginPage({ navigation }) {
+  export default function LoginDetailsPage({ navigation }) {
+
     const onPressHandler = () => {
-      navigation.navigate('LoginDetailsPage');
+      // navigation.navigate('Screen_A');
+      navigation.navigate('loginPage');
     }
 
-    const onPressSignUp = () => {
-      navigation.navigate('LoginDetailsPage');
+    const onPressForgetPassword = () => {
+      navigation.navigate('PasswordResetPage');
     }
   
     return (
@@ -29,8 +31,17 @@ export default function loginPage({ navigation }) {
           <Image style={styles.imageLogo}source={require('./assets/logo.png')}>
           </Image>
         </View>
+
+          <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+          </TextInput>
+          <TextInput secureTextEntry={true} style={styles.input} placeholder= 'Password' placeholderTextColor="black">
+          </TextInput>
   
-        <View style={styles.bottom}>
+          <Text style={styles.text}>
+            Forgot Password? Click <Text onPress={()=> onPressForgetPassword()} style={styles.text2}>Here</Text>
+          </Text>
+
+          <View style={styles.bottom}>
           <Pressable onPress={onPressHandler}
           style={({ pressed }) => [
             { backgroundColor: pressed ? '#ddd' : '#f49d36' },
@@ -38,18 +49,12 @@ export default function loginPage({ navigation }) {
           ]}
           >
             <Text style={styles.text}>
-              Login
+              Sign In
             </Text>
           </Pressable>
-
-          <Text style={styles.text}> 
-            Do not have an account? Sign up <Text onPress={()=> onPressSignUp()} style={styles.text2}>Here </Text>
-          </Text>
-  
         </View>
-  
       </View>
-  );
+      );
   }
       
 const styles = StyleSheet.create({
@@ -69,10 +74,10 @@ const styles = StyleSheet.create({
   },
   
   center: {
-    flex: 1,
+    flex: 1.5,
     backgroundColor: '#275B9F',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
 
   bottom: {
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 58,
+    width: 65,
     height: 37,
     borderRadius: 10,
   },
@@ -113,6 +118,17 @@ const styles = StyleSheet.create({
     height:100,
   },
 
+  input: {
+    borderWidth: 1,
+    width: 200,
+    height: 35,
+    margin:5,
+    padding:10,
+    alignItems: 'Center',
+    justifyContent: 'Center',
+
+  },
+  
   text2: {
     textDecorationLine: 'underline',
   }

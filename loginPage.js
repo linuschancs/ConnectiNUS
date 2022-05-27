@@ -38,18 +38,18 @@ export default function loginPage({ navigation }) {
           ]}
           >
             <Text style={styles.text}>
-              Login
+            Login
             </Text>
           </Pressable>
-
-          <Text style={styles.text}> 
-            Do not have an account? Sign up <Text onPress={()=> onPressSignUp()} style={styles.text2}>Here </Text>
+  
+          <Text style={styles.text}>
+          Do not have an account? Sign up <Text onPress={()=> onPressSignUp()} style={styles.text2}>Here </Text>
           </Text>
   
         </View>
   
       </View>
-  );
+      );
   }
       
 const styles = StyleSheet.create({
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   nusLogo: {
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
   },
 
   imageName: {
+    flex:1,
     width:300,
     height:100,
-
   },
 
   imageLogo: {
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     width:200,
     height:100,
   },
+
 
   text2: {
     textDecorationLine: 'underline',

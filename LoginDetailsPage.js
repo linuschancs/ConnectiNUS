@@ -12,7 +12,7 @@ import {
 
     const onPressHandler = () => {
       // navigation.navigate('Screen_A');
-      navigation.navigate('loginPage');
+      navigation.navigate('ChatsPage');
     }
 
     const onPressForgetPassword = () => {
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   nusLogo: {

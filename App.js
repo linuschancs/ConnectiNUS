@@ -15,12 +15,17 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          header: () => null
+          headerBackTitleVisible: false,
+          headerTransparent: true,
+          headerTitle: " "
         }}
       >
         <Stack.Screen
           name="loginPage"
           component={loginPage}
+          options={({ navigation, route }) => ({
+            headerShown: false
+          })}
         />
         <Stack.Screen
           name="LoginDetailsPage"
@@ -34,6 +39,7 @@ function App() {
         <Stack.Screen
           name="VerificationCodePage"
           component={VerificationCodePage}
+
         />
         <Stack.Screen
           name="NewPasswordPage"

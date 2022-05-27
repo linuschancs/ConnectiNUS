@@ -4,11 +4,12 @@ import {
   View,
   Text,
   Pressable,
-  Image, 
+  Image,
+  Dimensions, 
   
 } from 'react-native';
 
-export default function loginPage({ navigation }) {
+export default function LoginPage({ navigation }) {
     const onPressHandler = () => {
       navigation.navigate('LoginDetailsPage');
     }
@@ -20,13 +21,19 @@ export default function loginPage({ navigation }) {
     return (
       <View style={styles.body}>      
         <View style={styles.top}>
-          <Image style={styles.nusLogo}source={require('./assets/nuswhite2.png')}>
+          <Image style={styles.nusLogo}
+          resizeMode='contain'
+          source={require('./assets/nuswhite2.png')}>
           </Image>
         </View>
         <View style={styles.center}>
-          <Image style={styles.imageName}source={require('./assets/name.png')}>
+          <Image style={styles.imageName}
+          resizeMode='contain'
+          source={require('./assets/name.png')}>
           </Image>
-          <Image style={styles.imageLogo}source={require('./assets/logo.png')}>
+          <Image style={styles.imageLogo}
+          resizeMode='contain'
+          source={require('./assets/logo.png')}>
           </Image>
         </View>
   
@@ -109,6 +116,7 @@ const styles = StyleSheet.create({
 
   imageLogo: {
     flex:1,
+    //height: Dimensions.get('window').height,
     width:200,
     height:100,
   },

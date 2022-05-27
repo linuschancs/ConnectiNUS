@@ -17,13 +17,19 @@ export default function PasswordResetPage({ navigation }) {
     return (
       <View style={styles.body}>      
         <View style={styles.top}>
-          <Image style={styles.nusLogo}source={require('./assets/nuswhite2.png')}>
+          <Image style={styles.nusLogo}
+          resizeMode='contain'
+          source={require('./assets/nuswhite2.png')}>
           </Image>
         </View>
         <View style={styles.center}>
-          <Image style={styles.imageName}source={require('./assets/name.png')}>
+          <Image style={styles.imageName}
+          resizeMode='contain'
+          source={require('./assets/name.png')}>
           </Image>
-          <Image style={styles.imageLogo}source={require('./assets/logo.png')}>
+          <Image style={styles.imageLogo}
+          resizeMode='contain'
+          source={require('./assets/logo.png')}>
           </Image>
         </View>
 

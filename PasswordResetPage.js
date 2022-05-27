@@ -5,16 +5,13 @@ import {
   Text,
   Pressable,
   Image, 
+  TextInput
   
 } from 'react-native';
 
-export default function loginPage({ navigation }) {
+export default function PasswordResetPage({ navigation }) {
     const onPressHandler = () => {
-      navigation.navigate('LoginDetailsPage');
-    }
-
-    const onPressSignUp = () => {
-      navigation.navigate('LoginDetailsPage');
+      navigation.navigate('VerificationCodePage');
     }
   
     return (
@@ -29,6 +26,15 @@ export default function loginPage({ navigation }) {
           <Image style={styles.imageLogo}source={require('./assets/logo.png')}>
           </Image>
         </View>
+
+        <Text style={styles.textok}>
+            It's okay! We tend to forget sometimes! Just fill in 
+            your NUS email - eXXXXXXX@u.nus.edu and we will send you a verification
+            code for a password reset
+        </Text>
+
+        <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+        </TextInput>
   
         <View style={styles.bottom}>
           <Pressable onPress={onPressHandler}
@@ -37,15 +43,12 @@ export default function loginPage({ navigation }) {
             styles.button,
           ]}
           >
-            <Text style={styles.text}>
-              Login
+
+          <Text style={styles.text}>
+              Reset Password
             </Text>
           </Pressable>
 
-          <Text style={styles.text}> 
-            Do not have an account? Sign up <Text onPress={()=> onPressSignUp()} style={styles.text2}>Here </Text>
-          </Text>
-  
         </View>
   
       </View>
@@ -69,10 +72,11 @@ const styles = StyleSheet.create({
   },
   
   center: {
-    flex: 1,
+    flex: 1.2,
     backgroundColor: '#275B9F',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    margin: 5,
   },
 
   bottom: {
@@ -84,9 +88,10 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 58,
+    width: 125,
     height: 37,
     borderRadius: 10,
+    margin: 5
   },
 
   text: {
@@ -113,9 +118,23 @@ const styles = StyleSheet.create({
     height:100,
   },
 
-  text2: {
-    textDecorationLine: 'underline',
-  }
+  textok: {
+    color: "#FFF",
+    width: 350,
+    textAlign: 'center',
+    margin: 5,
+  },
+
+  input: {
+    borderWidth: 1,
+    width: 200,
+    height: 35,
+    margin: 5,
+    padding:10,
+    alignItems: 'Center',
+    justifyContent: 'Center',
+
+  },
 
 });
 

@@ -4,18 +4,14 @@ import {
   View,
   Text,
   Pressable,
-  Image,
-  Dimensions, 
+  Image, 
+  TextInput
   
 } from 'react-native';
 
-export default function LoginPage({ navigation }) {
+export default function SignUpPage({ navigation }) {
     const onPressHandler = () => {
-      navigation.navigate('LoginDetailsPage');
-    }
-
-    const onPressSignUp = () => {
-      navigation.navigate('SignUpPage');
+      navigation.navigate('SignUpVerificationCodePage');
     }
   
     return (
@@ -36,7 +32,18 @@ export default function LoginPage({ navigation }) {
           source={require('./assets/logo.png')}>
           </Image>
         </View>
-  
+
+        <Text style={styles.textok}>
+            Sign up with your NUS email - eXXXXXXX@u.nus.edu to create an account with us!
+        </Text>
+
+        <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+        </TextInput>
+        <TextInput style={styles.input} placeholder= 'Password' placeholderTextColor="black">
+        </TextInput>
+        <TextInput style={styles.input} placeholder= 'Confirm Password' placeholderTextColor="black">
+        </TextInput>
+
         <View style={styles.bottom}>
           <Pressable onPress={onPressHandler}
           style={({ pressed }) => [
@@ -44,19 +51,16 @@ export default function LoginPage({ navigation }) {
             styles.button,
           ]}
           >
-            <Text style={styles.text}>
-            Login
+
+          <Text style={styles.text}>
+              Confirm Sign Up
             </Text>
           </Pressable>
-  
-          <Text style={styles.text}>
-          Do not have an account? Sign up <Text onPress={()=> onPressSignUp()} style={styles.text2}>Here </Text>
-          </Text>
-  
+
         </View>
   
       </View>
-      );
+  );
   }
       
 const styles = StyleSheet.create({
@@ -76,10 +80,11 @@ const styles = StyleSheet.create({
   },
   
   center: {
-    flex: 1,
+    flex: 1.2,
     backgroundColor: '#275B9F',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    margin: 5,
   },
 
   bottom: {
@@ -91,16 +96,17 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 58,
+    width: 125,
     height: 37,
     borderRadius: 10,
+    margin: 5
   },
 
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'Center',
+    justifyContent: 'Center',
   },
 
   nusLogo: {
@@ -109,22 +115,34 @@ const styles = StyleSheet.create({
   },
 
   imageName: {
-    flex:1,
     width:300,
     height:100,
+
   },
 
   imageLogo: {
     flex:1,
-    //height: Dimensions.get('window').height,
     width:200,
     height:100,
   },
 
+  textok: {
+    color: "#FFF",
+    width: 350,
+    textAlign: 'center',
+    margin: 5,
+  },
 
-  text2: {
-    textDecorationLine: 'underline',
-  }
+  input: {
+    borderWidth: 1,
+    width: 200,
+    height: 35,
+    margin: 5,
+    padding:10,
+    alignItems: 'Center',
+    justifyContent: 'Center',
+
+  },
 
 });
 

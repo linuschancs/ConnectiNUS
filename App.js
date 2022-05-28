@@ -14,6 +14,10 @@ import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import SignUpPage from './SignUpPage';
+import SignUpVerificationCodePage from './SignUpVerificationCodePage';
+import SuccessfulSignUpPage from './SuccessfulSignUpPage';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -119,10 +123,25 @@ function App() {
           component={SuccessfulPasswordResetPage}
         />
         <Stack.Screen
+          name="SignUpPage"
+          component={SignUpPage}
+        />
+        <Stack.Screen
+          name="SignUpVerificationCodePage"
+          component={SignUpVerificationCodePage}
+        />
+        <Stack.Screen
+          name="SuccessfulSignUpPage"
+          component={SuccessfulSignUpPage}
+        />
+
+        <Stack.Screen
           name="ChatsPage"
           component={ChatsPageTab}
           options={{ headerShown: false }}
         />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   )

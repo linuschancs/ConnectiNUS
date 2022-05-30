@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
 
   imageLogo: {
     flex:1,
-    //height: Dimensions.get('window').height,
     width:200,
     height:100,
   },

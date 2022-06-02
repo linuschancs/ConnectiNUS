@@ -1,4 +1,7 @@
-import React from 'react';
+import { app, database } from './firebaseConfig';
+import React, {useState} from 'react';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
 import {
   StyleSheet,
   View,
@@ -10,10 +13,16 @@ import {
 } from 'react-native';
 
 export default function PasswordResetPage({ navigation }) {
-    const onPressHandler = () => {
-      navigation.navigate('VerificationCodePage');
-    }
-  
+
+    const auth = getAuth();
+    const [email, setEmail] = useState('')
+
+    const onPressForgetPassword = () => {
+      sendPasswordResetEmail(auth, email)
+      navigation.navigate('LoginDetailsPage')
+
+    };
+
     return (
       <View style={styles.body}>      
         <View style={styles.top}>
@@ -35,15 +44,14 @@ export default function PasswordResetPage({ navigation }) {
 
         <Text style={styles.textok}>
             It's okay! We tend to forget sometimes! Just fill in 
-            your NUS email - eXXXXXXX@u.nus.edu and we will send you a verification
-            code for a password reset
+            your NUS email - eXXXXXXX@u.nus.edu and we will send you an email for a password reset
         </Text>
 
-        <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+        <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} placeholder= 'Email' placeholderTextColor="black">
         </TextInput>
   
         <View style={styles.bottom}>
-          <Pressable onPress={onPressHandler}
+          <Pressable onPress={onPressForgetPassword}
           style={({ pressed }) => [
             { backgroundColor: pressed ? '#ddd' : '#f49d36' },
             styles.button,

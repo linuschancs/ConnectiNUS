@@ -2,6 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { collection, addDoc } from 'firebase/firestore';
+import { app, database } from './firebaseConfig';
 
 import LoginPage from './LoginPage';
 import LoginDetailsPage from './LoginDetailsPage';
@@ -17,7 +19,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpPage from './SignUpPage';
 import SignUpVerificationCodePage from './SignUpVerificationCodePage';
 import SuccessfulSignUpPage from './SuccessfulSignUpPage';
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

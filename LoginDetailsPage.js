@@ -1,4 +1,8 @@
+import { app, database } from './firebaseConfig';
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import React, {useState} from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+
 import { 
   StyleSheet, 
   Text,
@@ -10,14 +14,27 @@ import {
 
   export default function LoginDetailsPage({ navigation }) {
 
+    let auth = getAuth();
+
     const onPressHandler = () => {
-      // navigation.navigate('Screen_A');
-      navigation.navigate('ChatsPage');
-    }
+      signInWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        console.log(response.user)
+        navigation.navigate('ChatsPage');
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+    };
 
     const onPressForgetPassword = () => {
-      navigation.navigate('PasswordResetPage');
-    }
+      navigation.navigate('PasswordResetPage')
+      sendPasswordResetEmail(auth, email)
+    };
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
   
     return (
       <View style={styles.body}>      
@@ -38,9 +55,9 @@ import {
           </Image>
         </View>
 
-          <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+          <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} placeholder= 'Email' placeholderTextColor="black">
           </TextInput>
-          <TextInput secureTextEntry={true} style={styles.input} placeholder= 'Password' placeholderTextColor="black">
+          <TextInput secureTextEntry={true} style={styles.input} value={password} onChangeText={text => setPassword(text)} placeholder= 'Password' placeholderTextColor="black">
           </TextInput>
   
           <Text style={styles.text}>

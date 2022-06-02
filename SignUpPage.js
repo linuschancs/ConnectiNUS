@@ -1,4 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { app, database } from './firebaseConfig';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  collection,
+  addDoc
+} from 'firebase/firestore';
 import {
   StyleSheet,
   View,
@@ -10,9 +16,23 @@ import {
 } from 'react-native';
 
 export default function SignUpPage({ navigation }) {
+    let auth = getAuth();
+
+
     const onPressHandler = () => {
-      navigation.navigate('SignUpVerificationCodePage');
-    }
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        console.log(response.user)
+        navigation.navigate('SignUpVerificationCodePage');
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+    };
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
   
     return (
       <View style={styles.body}>      
@@ -37,11 +57,11 @@ export default function SignUpPage({ navigation }) {
             Sign up with your NUS email - eXXXXXXX@u.nus.edu to create an account with us!
         </Text>
 
-        <TextInput style={styles.input} placeholder= 'Email' placeholderTextColor="black">
+        <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} placeholder= 'Email' placeholderTextColor="black">
         </TextInput>
-        <TextInput style={styles.input} placeholder= 'Password' placeholderTextColor="black">
+        <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)}placeholder= 'Password' placeholderTextColor="black">
         </TextInput>
-        <TextInput style={styles.input} placeholder= 'Confirm Password' placeholderTextColor="black">
+        <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)} placeholder= 'Confirm Password' placeholderTextColor="black">
         </TextInput>
 
         <View style={styles.bottom}>

@@ -2,10 +2,6 @@ import React, {useState} from 'react';
 import { app, database } from './firebaseConfig';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import {
-  collection,
-  addDoc
-} from 'firebase/firestore';
-import {
   StyleSheet,
   View,
   Text,

@@ -9,9 +9,9 @@ import {
   
 } from 'react-native';
 
-export default function SignUpVerificationCodePage({ navigation }) {
+export default function NewPasswordPage({ navigation }) {
     const onPressHandler = () => {
-      navigation.navigate('SuccessfulSignUpPage');
+      navigation.navigate('SuccessfulPasswordResetPage');
     }
   
     return (
@@ -33,11 +33,9 @@ export default function SignUpVerificationCodePage({ navigation }) {
           </Image>
         </View>
 
-        <Text style={styles.textok}>
-            We have sent a verification code to your email, enter it here to successfully create your account!
-        </Text>
-
-        <TextInput style={styles.input} placeholder= 'Verification Code' placeholderTextColor="black">
+        <TextInput style={styles.input} placeholder= 'New Password' placeholderTextColor="black">
+        </TextInput>
+        <TextInput style={styles.input} placeholder= 'Confirm New Password' placeholderTextColor="black">
         </TextInput>
 
         <View style={styles.bottom}>
@@ -48,8 +46,8 @@ export default function SignUpVerificationCodePage({ navigation }) {
           ]}
           >
 
-            <Text style={styles.text}>
-              Submit
+          <Text style={styles.text}>
+              Reset Password
             </Text>
           </Pressable>
 
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 68,
+    width: 123,
     height: 37,
     borderRadius: 10,
     margin: 5
@@ -122,13 +120,6 @@ const styles = StyleSheet.create({
     height:100,
   },
 
-  textok: {
-    color: "#FFF",
-    width: 350,
-    textAlign: 'center',
-    margin: 5,
-  },
-
   input: {
     borderWidth: 1,
     width: 200,
@@ -141,4 +132,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

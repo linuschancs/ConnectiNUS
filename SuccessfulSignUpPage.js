@@ -33,7 +33,7 @@ export default function SuccessfulSignUpPage({ navigation }) {
         </View>
 
         <Text style={styles.textok}>
-            Your account has been successfully created.  
+            A verification email has been sent to your email! Please verify your account to login to your account.  
         </Text>
 
         <View style={styles.bottom}>

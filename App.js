@@ -8,16 +8,14 @@ import { app, database } from './firebaseConfig';
 import LoginPage from './LoginPage';
 import LoginDetailsPage from './LoginDetailsPage';
 import PasswordResetPage from './PasswordResetPage';
-import VerificationCodePage from './VerificationCodePage';
 import NewPasswordPage from './NewPasswordPage';
-import SuccessfulPasswordResetPage from './SuccessfulPasswordResetPage';
+import VerificationCodePage from './VerificationCodePage';
 import ChatsPage from './ChatsPage';
 import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpPage from './SignUpPage';
-import SignUpVerificationCodePage from './SignUpVerificationCodePage';
 import SuccessfulSignUpPage from './SuccessfulSignUpPage';
 
 const Stack = createStackNavigator();
@@ -69,7 +67,7 @@ export function ChatsPageTab() {
       options = {{tabBarLabel:"Search",}}/>
       <Tab.Screen
       name='ChatsPage'
-      component={ChatsPage}
+      component={ChatsPageTab}
       options = {{tabBarLabel:"Chats",}}/>
       <Tab.Screen
       name="FriendsPage"
@@ -107,29 +105,20 @@ function App() {
         />
 
         <Stack.Screen
-          name="PasswordResetPage"
-          component={PasswordResetPage}
+          name="SignUpPage"
+          component={SignUpPage}
         />
         <Stack.Screen
-          name="VerificationCodePage"
-          component={VerificationCodePage}
-
+          name="PasswordResetPage"
+          component={PasswordResetPage}
         />
         <Stack.Screen
           name="NewPasswordPage"
           component={NewPasswordPage}
         />
         <Stack.Screen
-          name="SuccessfulPasswordResetPage"
-          component={SuccessfulPasswordResetPage}
-        />
-        <Stack.Screen
-          name="SignUpPage"
-          component={SignUpPage}
-        />
-        <Stack.Screen
-          name="SignUpVerificationCodePage"
-          component={SignUpVerificationCodePage}
+          name="VerificationCodePage"
+          component={VerificationCodePage}
         />
         <Stack.Screen
           name="SuccessfulSignUpPage"

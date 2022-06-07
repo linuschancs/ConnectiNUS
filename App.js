@@ -6,7 +6,8 @@ import LoginPage from './LoginPage';
 import LoginDetailsPage from './LoginDetailsPage';
 import PasswordResetPage from './PasswordResetPage';
 import SignUpPage from './SignUpPage';
-import SuccessfulSignUpPage from './SuccessfulSignUpPage';
+import SuccessfulSignUpPage from './SuccessfulSignUpPage'
+import MyProfilePage from './MyProfilePage';
 import { BottomTabNavi } from './BottomTabNavi';
 
 const Stack = createStackNavigator();
@@ -51,7 +52,11 @@ function App() {
           component={BottomTabNavi}
           options={{ headerShown: false }}
         />
-
+        
+        <Stack.Screen
+          name="MyProfilePage"
+          component={MyProfilePage}
+        />
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -15,7 +15,10 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-export function BottomTabNavi() {
+export function BottomTabNavi({ navigation }) {
+  const onPressHandler = () => {
+    navigation.navigate('MyProfilePage');
+  }
 
     return (
       <Tab.Navigator
@@ -24,7 +27,7 @@ export function BottomTabNavi() {
             backgroundColor: '#fff',
           },
           headerRight: () => (
-            <Pressable
+            <Pressable onPress={onPressHandler}
             style={{
                 position: 'absolute',
                 padding: 5,

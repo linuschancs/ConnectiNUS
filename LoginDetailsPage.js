@@ -1,5 +1,5 @@
 import { app, database } from './firebaseConfig';
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 
@@ -25,7 +25,6 @@ import {
             navigation.navigate('ChatsPage');
           } else {
             console.log('Email not verified')
-            console.log(response.user)
             alert("Your email has not been verified");
           }
       //console.log(response.user)
@@ -38,7 +37,6 @@ import {
 
     const onPressForgetPassword = () => {
       navigation.navigate('PasswordResetPage')
-      sendPasswordResetEmail(auth, email)
     };
 
     const [email, setEmail] = useState('')

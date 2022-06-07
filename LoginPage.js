@@ -6,7 +6,6 @@ import {
   Text,
   Pressable,
   Image,
-  Dimensions, 
   
 } from 'react-native';
 

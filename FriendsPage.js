@@ -4,9 +4,6 @@ import {
   View,
   Text,
   Pressable,
-  Image, 
-  TextInput
-  
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

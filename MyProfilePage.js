@@ -8,7 +8,6 @@ import {
 export default function MyProfilePage({ navigation }) {
     return (
         <View style={styles.body}>
-
             <Text style={styles.text1}> This is the My Profile Page. This page has not been implemented.</Text>      
         </View>
     );

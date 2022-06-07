@@ -11,9 +11,6 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function ChatsPage({ navigation }) {
-    const onPressHandler = () => {
-        navigation.navigate('LoginDetailsPage');
-      }
 
     return (
         <View style={styles.body}>

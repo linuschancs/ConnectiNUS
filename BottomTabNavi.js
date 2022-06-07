@@ -6,7 +6,12 @@ import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import {
+  Pressable,
+  Image, 
+  TextInput
+  
+} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,13 +20,47 @@ export function BottomTabNavi() {
     return (
       <Tab.Navigator
         screenOptions={({route})=> ({
-          headerTransparent: true,
-          headerTitle: " ",
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
+          headerRight: () => (
+            <Pressable
+            style={{
+                position: 'absolute',
+                padding: 5,
+                right: 20,
+                borderWidth:1,
+                borderColor:'rgba(0,0,0,0.2)',
+                width:40,
+                height:40,
+                backgroundColor:'#fff',
+                borderRadius:50,
+                justifyContent: 'center',
+                alignItems: 'center'
+                }}
+            >
+            <FontAwesome5 name={"user"}  size={20} color="#01a699"/>
+            </Pressable> 
+        ),
+          headerTintColor: '#01a699',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          tabBarStyle: {
+            height: 60,
+            position: 'absolute',
+            bottom: 10,
+            right: 15,
+            left: 15,
+            borderRadius: 15,
+            backgroundColor:"#FFFF",
+            padding: 5,
+          },
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
             if(route.name==='SearchPage') {
               iconName = 'search';
-              size = focused ? 25 : 20;;
+              size = focused ? 25 : 20;
             } else if (route.name==='ChatsPage') {
               iconName = 'comments';
               size = focused ? 25 : 20;
@@ -44,27 +83,25 @@ export function BottomTabNavi() {
         }
         tabBarOptions={{
           activeTintColor: '#F4A836',
-          inactiveTintColor: '#C9D4E3',
-          activeBackgroundColor: '#275B9F',
-          inactiveBackgroundColor: '#275B9F'
+          inactiveTintColor: '#275B9F',
         }}
       >
         <Tab.Screen
         name="SearchPage"
-        component={SearchPage} 
-        options = {{tabBarLabel:"Search",}}/>
+        component={SearchPage}
+        options = {{title: "Search", tabBarLabel:"Search", tabBarLabelStyle: {padding: 5}}}/>
         <Tab.Screen
         name='ChatsPage'
         component={ChatsPage}
-        options = {{tabBarLabel:"Chats",}}/>
+        options = {{title: "Chats", tabBarLabel:"Chats", tabBarLabelStyle: {padding: 5}}}/>
         <Tab.Screen
         name="FriendsPage"
         component={FriendsPage}
-        options = {{tabBarLabel:"Friends",}}/>
+        options = {{title: "Friends", tabBarLabel:"Friends", tabBarLabelStyle: {padding: 5}}}/>
         <Tab.Screen
         name='SettingsPage'
         component={SettingsPage}
-        options = {{tabBarLabel:"Settings",}}/>
+        options = {{title: "Settings", tabBarLabel:"Settings", tabBarLabelStyle: {padding: 5}}}/>
       </Tab.Navigator>
   
       );

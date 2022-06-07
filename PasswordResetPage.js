@@ -18,10 +18,20 @@ export default function PasswordResetPage({ navigation }) {
     const [email, setEmail] = useState('')
 
     const onPressForgetPassword = () => {
-      sendPasswordResetEmail(auth, email)
-      navigation.navigate('LoginDetailsPage')
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+          // password reset email sent successfully
+          alert("A password reset link has been sent to your email!");
+          navigation.navigate('LoginDetailsPage')
+        })
+        .catch((error) => {
+          // There was an error verifying the email
+          // Check the output of error.toString()
+          // This is where you may want to show a pop-up dialog
+          alert(error.message);
+        })
+    }
 
-    };
 
     return (
       <View style={styles.body}>      

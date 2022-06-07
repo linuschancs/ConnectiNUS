@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { app, database } from './firebaseConfig';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import {
   collection,
   addDoc
@@ -16,19 +16,19 @@ import {
 } from 'react-native';
 
 export default function SignUpPage({ navigation }) {
-    let auth = getAuth();
 
+    let auth = getAuth();
 
     const onPressHandler = () => {
       createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
+     .then((response) => {
         console.log(response.user)
-        navigation.navigate('SignUpVerificationCodePage');
-
+        sendEmailVerification(auth.currentUser);
+        navigation.navigate('SuccessfulSignUpPage');
       })
       .catch((err) => {
         alert(err.message);
-      });
+      })
     };
 
     const [email, setEmail] = useState('')

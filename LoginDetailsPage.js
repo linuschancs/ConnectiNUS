@@ -19,9 +19,17 @@ import {
     const onPressHandler = () => {
       signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
-        console.log(response.user)
-        navigation.navigate('ChatsPage');
-
+          if (auth.currentUser.emailVerified) { //This will return true or false
+            console.log('Email is verified')
+            console.log(response.user)
+            navigation.navigate('ChatsPage');
+          } else {
+            console.log('Email not verified')
+            console.log(response.user)
+            alert("Your email has not been verified");
+          }
+      //console.log(response.user)
+      //navigation.navigate('ChatsPage');
       })
       .catch((err) => {
         alert(err.message);

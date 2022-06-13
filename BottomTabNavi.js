@@ -8,11 +8,11 @@ import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {
   Pressable,
-  Image, 
-  TextInput
   
 } from 'react-native';
+import {Dimensions, View, Text} from 'react-native';
 
+const {width, height} = Dimensions.get('window');
 const Tab = createBottomTabNavigator();
 
 export function BottomTabNavi({ navigation }) {
@@ -34,7 +34,7 @@ export function BottomTabNavi({ navigation }) {
                 right: 20,
                 borderWidth:1,
                 borderColor:'rgba(0,0,0,0.2)',
-                width:40,
+                width: 40,
                 height:40,
                 backgroundColor:'#fff',
                 borderRadius:50,
@@ -52,12 +52,12 @@ export function BottomTabNavi({ navigation }) {
           tabBarStyle: {
             height: 60,
             position: 'absolute',
-            bottom: 10,
+            bottom: 20,
             right: 15,
             left: 15,
             borderRadius: 15,
             backgroundColor:"#FFFF",
-            padding: 5,
+            padding: 0,
           },
           tabBarIcon: ({focused, size, color}) => {
             let iconName;

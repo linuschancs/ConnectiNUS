@@ -52,12 +52,12 @@ export function BottomTabNavi({ navigation }) {
           tabBarStyle: {
             height: 60,
             position: 'absolute',
-            bottom: 20,
+            bottom: '2%',
             right: 15,
             left: 15,
             borderRadius: 15,
             backgroundColor:"#FFFF",
-            padding: 0,
+
           },
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
@@ -92,19 +92,19 @@ export function BottomTabNavi({ navigation }) {
         <Tab.Screen
         name="SearchPage"
         component={SearchPage}
-        options = {{title: "Search", tabBarLabel:"Search", tabBarLabelStyle: {padding: 5}}}/>
+        options = {{title: "Search", tabBarLabel:"Search", tabBarLabelStyle: {paddingBottom: 5}}}/>
         <Tab.Screen
         name='ChatsPage'
         component={ChatsPage}
-        options = {{title: "Chats", tabBarLabel:"Chats", tabBarLabelStyle: {padding: 5}}}/>
+        options = {{title: "Chats", tabBarLabel:"Chats", tabBarLabelStyle: {paddingBottom: 5}}}/>
         <Tab.Screen
         name="FriendsPage"
         component={FriendsPage}
-        options = {{title: "Friends", tabBarLabel:"Friends", tabBarLabelStyle: {padding: 5}}}/>
+        options = {{title: "Friends", tabBarLabel:"Friends", tabBarLabelStyle: {paddingBottom: 5}}}/>
         <Tab.Screen
         name='SettingsPage'
         component={SettingsPage}
-        options = {{title: "Settings", tabBarLabel:"Settings", tabBarLabelStyle: {padding: 5}}}/>
+        options = {{title: "Settings", tabBarLabel:"Settings", tabBarLabelStyle: {paddingBottom: 5}}}/>
       </Tab.Navigator>
   
       );

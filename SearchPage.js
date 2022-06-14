@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {
-    SafeAreaView,
     StyleSheet,
-    ScrollView,
     View,
     Text,
     TextInput,
@@ -11,7 +9,6 @@ import {
 import ModData from "./nusMods2021.json";
 
 export default function SearchPage({ navigation }) {
-        //const [dataSource] = useState(ModData);
         const [filtered, setFiltered] = useState([])
         const [searching, setSearching] = useState(false)
 
@@ -35,15 +32,11 @@ export default function SearchPage({ navigation }) {
       
             <TextInput
               style={styles.textInput}
-              placeholder="Search"
+              placeholder="Search..."
               placeholderTextColor='white'
               onChangeText={onSearch}
       
             />
-
-            <TouchableOpacity
-            //onPress={props.onPress}
-            style={styles.container2}>
 
             <View style={styles.subContainer}>
                 {
@@ -51,9 +44,9 @@ export default function SearchPage({ navigation }) {
 
                         filtered.slice(0,5).map(item => {
                             return (
-                                <View style={styles.itemView}>
+                                <TouchableOpacity style={styles.itemView}>
                                     <Text style={styles.itemText}>{item.moduleCode}</Text>
-                                </View>
+                                </TouchableOpacity>
                             )
                         }) 
 
@@ -67,7 +60,7 @@ export default function SearchPage({ navigation }) {
                 }
 
             </View>
-            </TouchableOpacity>
+
 
             
           
@@ -88,26 +81,22 @@ const styles = StyleSheet.create({
     textInput: {
         backgroundColor: '#BFBFBF',
         width: '80%',
-        borderRadius: 5,
+        borderRadius: 10,
         height: 50,
         fontSize: 20,
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         paddingHorizontal: 10,
+        top: '5%',
       },
-    container2: {
-        position: 'absolute',
-        top: '6.2%',
-        left: 0, right: 0, bottom: 0,
 
-    },
     subContainer: {
-
+        //position: 'absolute',
         backgroundColor: '#84DCC6',
-        paddingTop: 10,
         marginHorizontal: 20,
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
+        borderRadius: 10,
         flexWrap: 'wrap',
+        top: '5%',
+        width: '80%',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -121,6 +110,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'center',
         borderRadius: 4,
+        marginTop: 10,
     },
     itemText: {
         color: 'black',

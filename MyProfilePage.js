@@ -1,15 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    ScrollView,
+    SafeAreaView,
+  } from 'react-native';
 
-export default function MyProfilePage({ navigation }) {
+
+
+export default function MyProfilePage({ navigation}) {
+  
+  
     return (
-        <View style={styles.body}>
-            <Text style={styles.text1}> This is the My Profile Page. This page has not been implemented.</Text>      
-        </View>
+      <SafeAreaView style={styles.body}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+          showsVerticalScrollIndicator={false}>
+          <Image
+            style={styles.userImg}
+            source={require('./assets/nuswhite2.png')}
+          />
+  
+          <View style={styles.userInfoWrapper}>
+              <Text>This is the user info</Text>
+          </View>
+
+        </ScrollView>
+      </SafeAreaView>
     );
 }
 
@@ -20,8 +41,50 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-
-    text1: {
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+      },
+      userImg: {
+        height: 150,
+        width: 150,
+        borderRadius: 75,
+      },
+      userName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 10,
+      },
+      aboutUser: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#666',
         textAlign: 'center',
-    }
+        marginBottom: 10,
+      },
+      userBtnWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
+        marginBottom: 10,
+      },
+      userBtn: {
+        borderColor: '#2e64e5',
+        borderWidth: 2,
+        borderRadius: 3,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginHorizontal: 5,
+      },
+      userBtnTxt: {
+        color: '#2e64e5',
+      },
+      userInfoWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginVertical: 20,
+      },
 })

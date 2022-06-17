@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
@@ -17,4 +17,23 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const database = getFirestore(app);
+export const createUserDocument = async (email, displayName, uid) => {
+  const userRef = doc(collection(database, "users"), uid);
+    try {
+      await setDoc(userRef, {
+        displayName: displayName,
+        email: email,
+        year: '',
+        major: '',
+        userStatus: '',
+        profilePic: '',
+        telegramHandle: '',
+        NUSModsLink: '',
+        createdAt: new Date(),
+      });
+    } catch(error) {
+      console.log('Error in creating user', error);
+    }
+}
+

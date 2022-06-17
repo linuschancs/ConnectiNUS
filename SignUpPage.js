@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { app, database } from './firebaseConfig';
+import { app, database, createUserDocument } from './firebaseConfig';
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import {
   StyleSheet,
@@ -12,23 +12,24 @@ import {
 } from 'react-native';
 
 export default function SignUpPage({ navigation }) {
-
+  
     let auth = getAuth();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [displayName, setDisplayName] = useState('')
 
     const onPressHandler = () => {
       createUserWithEmailAndPassword(auth, email, password)
      .then((response) => {
         console.log(response.user)
         sendEmailVerification(auth.currentUser);
+        createUserDocument(email, displayName, auth.currentUser.uid);
         navigation.navigate('SuccessfulSignUpPage');
       })
       .catch((err) => {
         alert(err.message);
       })
     };
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
   
     return (
       <View style={styles.body}>      
@@ -52,7 +53,8 @@ export default function SignUpPage({ navigation }) {
         <Text style={styles.textok}>
             Sign up with your NUS email - eXXXXXXX@u.nus.edu to create an account with us!
         </Text>
-
+        <TextInput style={styles.input} value={displayName} onChangeText={text => setDisplayName(text)} placeholder= 'Display Name' placeholderTextColor="black">
+        </TextInput>
         <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} placeholder= 'Email' placeholderTextColor="black">
         </TextInput>
         <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)}placeholder= 'Password' placeholderTextColor="black">

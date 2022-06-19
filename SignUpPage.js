@@ -23,7 +23,7 @@ export default function SignUpPage({ navigation }) {
      .then((response) => {
         console.log(response.user)
         sendEmailVerification(auth.currentUser);
-        createUserDocument(email, displayName, auth.currentUser.uid);
+        createUserDocument(email, displayName, password, auth.currentUser.uid);
         navigation.navigate('SuccessfulSignUpPage');
       })
       .catch((err) => {

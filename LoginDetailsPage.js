@@ -1,4 +1,4 @@
-import { app, db, auth } from './firebaseConfig';
+import { app, database, auth } from './firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
@@ -16,6 +16,7 @@ import {
 
     let auth = getAuth();
 
+
     const onPressHandler = () => {
       signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
@@ -23,11 +24,6 @@ import {
             console.log('Email is verified')
             console.log(response.user)
             navigation.navigate('ChatsPage');
-            db.collection('users').doc(auth.currentUser.uid)
-            .set({
-                password: password,
-                email: email
-            })
             
           } else {
             console.log('Email not verified')

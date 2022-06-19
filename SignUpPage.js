@@ -7,7 +7,8 @@ import {
   Text,
   Pressable,
   Image, 
-  TextInput
+  TextInput,
+  SafeAreaView
   
 } from 'react-native';
 
@@ -15,24 +16,30 @@ export default function SignUpPage({ navigation }) {
   
     let auth = getAuth();
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [password1, setPassword1] = useState('')
+    const [password2, setPassword2] = useState('')
     const [displayName, setDisplayName] = useState('')
 
     const onPressHandler = () => {
-      createUserWithEmailAndPassword(auth, email, password)
-     .then((response) => {
-        console.log(response.user)
-        sendEmailVerification(auth.currentUser);
-        createUserDocument(email, displayName, password, auth.currentUser.uid);
-        navigation.navigate('SuccessfulSignUpPage');
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
+      if (password1 == password2) {
+        createUserWithEmailAndPassword(auth, email, password1)
+        .then((response) => {
+           console.log(response.user)
+           sendEmailVerification(auth.currentUser);
+           createUserDocument(email, displayName, auth.currentUser.uid);
+           navigation.navigate('SuccessfulSignUpPage');
+         })
+         .catch((err) => {
+           alert(err.message);
+         })
+      } else {
+        alert('Please ensure your passwords match');
+        console.log('Password Mismatch')
+      }
     };
   
     return (
-      <View style={styles.body}>      
+      <SafeAreaView style={styles.body}>      
         <View style={styles.top}>
           <Image style={styles.nusLogo}
           resizeMode='contain'
@@ -57,12 +64,13 @@ export default function SignUpPage({ navigation }) {
         </TextInput>
         <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} placeholder= 'Email' placeholderTextColor="black">
         </TextInput>
-        <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)}placeholder= 'Password' placeholderTextColor="black">
+        <TextInput style={styles.input} value={password1} onChangeText={text => setPassword1(text)}placeholder= 'Password' placeholderTextColor="black">
         </TextInput>
-        <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)} placeholder= 'Confirm Password' placeholderTextColor="black">
+        <TextInput style={styles.input} value={password2} onChangeText={text => setPassword2(text)} placeholder= 'Confirm Password' placeholderTextColor="black">
         </TextInput>
 
         <View style={styles.bottom}>
+
           <Pressable onPress={onPressHandler}
           style={({ pressed }) => [
             { backgroundColor: pressed ? '#ddd' : '#f49d36' },
@@ -74,15 +82,16 @@ export default function SignUpPage({ navigation }) {
               Confirm Sign Up
             </Text>
           </Pressable>
-
+          
         </View>
   
-      </View>
+      </SafeAreaView>
   );
   }
       
 const styles = StyleSheet.create({
   body: {
+    alignContent: 'flex-start',
     flex:1,
     backgroundColor: '#275B9F',
     alignItems: 'center',
@@ -98,7 +107,7 @@ const styles = StyleSheet.create({
   },
   
   center: {
-    flex: 1.2,
+    flex: 1.5,
     backgroundColor: '#275B9F',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -133,11 +142,12 @@ const styles = StyleSheet.create({
   },
 
   imageName: {
+    flex: 1,
     width:300,
     height:100,
 
   },
-
+  
   imageLogo: {
     flex:1,
     width:200,
@@ -153,13 +163,12 @@ const styles = StyleSheet.create({
 
   input: {
     borderWidth: 1,
-    width: 200,
-    height: 35,
+    width: 180,
+    height: 30,
     margin: 5,
-    padding:10,
+    paddingLeft: 10,
     alignItems: 'Center',
     justifyContent: 'Center',
-
   },
 
 });

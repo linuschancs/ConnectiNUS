@@ -1,21 +1,18 @@
-import { app, database, auth } from './firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-
 import { 
   StyleSheet, 
   Text,
   View,
   Pressable,
   Image,
-  TextInput
+  TextInput,
+  SafeAreaView
   } from 'react-native';
 
   export default function LoginDetailsPage({ navigation }) {
 
     let auth = getAuth();
-
 
     const onPressHandler = () => {
       signInWithEmailAndPassword(auth, email, password)
@@ -24,13 +21,10 @@ import {
             console.log('Email is verified')
             console.log(response.user)
             navigation.navigate('ChatsPage');
-            
           } else {
             console.log('Email not verified')
             alert("Your email has not been verified");
           }
-      //console.log(response.user)
-      //navigation.navigate('ChatsPage');
       })
       .catch((err) => {
         alert(err.message);
@@ -45,7 +39,7 @@ import {
     const [password, setPassword] = useState('')
   
     return (
-      <View style={styles.body}>      
+      <SafeAreaView style={styles.body}>      
         <View style={styles.top}>
           <Image style={styles.nusLogo}
           resizeMode='contain'
@@ -84,7 +78,7 @@ import {
             </Text>
           </Pressable>
         </View>
-      </View>
+      </SafeAreaView>
       );
   }
       

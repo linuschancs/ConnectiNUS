@@ -56,7 +56,7 @@ export default function MyProfilePage({ navigation}) {
 const styles = StyleSheet.create({
     body: {
       flex:1,
-      backgroundColor: '#4B8BDF',
+      //backgroundColor: '#4B8BDF',
       //alignItems: 'center',
       justifyContent: 'center',
     },

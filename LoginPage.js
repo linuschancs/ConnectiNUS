@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
 
   bottom: {
     flex: 1,
+    paddingTop: 10,
     backgroundColor: '#275B9F',
     alignItems: 'center',
     justifyContent: 'flex-start',

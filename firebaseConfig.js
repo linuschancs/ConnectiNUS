@@ -18,12 +18,14 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getFirestore(app);
-export const createUserDocument = async (email, displayName, uid) => {
+export const createUserDocument = async (email, displayName, password, uid) => {
   const userRef = doc(collection(database, "users"), uid);
     try {
       await setDoc(userRef, {
         displayName: displayName,
         email: email,
+        password: password,
+        uid: uid,
         year: '',
         major: '',
         userStatus: '',
@@ -37,3 +39,6 @@ export const createUserDocument = async (email, displayName, uid) => {
     }
 }
 
+export const chatsRef = collection(database, "chats");
+
+export const usersRef = collection(database, "users");

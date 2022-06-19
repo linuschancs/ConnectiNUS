@@ -5,14 +5,30 @@ import {
   Text,
   Pressable,
 } from 'react-native';
+
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function ChatsPage({ navigation }) {
 
+    const onPressHandler = () => {
+        navigation.navigate('InnerChatsPage');
+    }
+
     return (
         <View style={styles.body}>
 
-            <Text style={styles.text1}> This is the Chats Page. This page has not been implemented.</Text>      
+            <Text style={styles.text1}> This is the Chats Page. This page has not been implemented.</Text>
+            <Pressable onPress={onPressHandler}
+          style={({ pressed }) => [
+            { backgroundColor: pressed ? '#ddd' : '#f49d36' },
+            styles.button,
+          ]}
+          >
+            <Text style={styles.text2}>
+              Join Chatroom
+            </Text>
+          </Pressable>
+                  
         </View>
     );
 }
@@ -26,6 +42,11 @@ const styles = StyleSheet.create({
     },
 
     text1: {
+        textAlign: 'center',
+    },
+
+    text2: {
+        width:100,
         textAlign: 'center',
     }
 })

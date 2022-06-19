@@ -1,7 +1,7 @@
-import { app, database } from './firebaseConfig';
+import { app, database, auth } from './firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 import { 
   StyleSheet, 
@@ -16,6 +16,7 @@ import {
 
     let auth = getAuth();
 
+
     const onPressHandler = () => {
       signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
@@ -23,6 +24,7 @@ import {
             console.log('Email is verified')
             console.log(response.user)
             navigation.navigate('ChatsPage');
+            
           } else {
             console.log('Email not verified')
             alert("Your email has not been verified");

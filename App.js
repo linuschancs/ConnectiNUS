@@ -10,6 +10,7 @@ import SuccessfulSignUpPage from './SuccessfulSignUpPage'
 import MyProfilePage from './MyProfilePage';
 import EditProfilePage from './EditProfilePage';
 import { BottomTabNavi } from './BottomTabNavi';
+import InnerChatsPage from './InnerChatsPage';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,11 @@ function App() {
           name="ChatsPage"
           component={BottomTabNavi}
           options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="InnerChatsPage"
+          component={InnerChatsPage}
         />
         
         <Stack.Screen

@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {
     StyleSheet,
+    SafeAreaView,
     View,
     Text,
     TextInput,
     TouchableOpacity,
 } from 'react-native';
-import ModData from "./nusMods2021.json";
+import ModData from "./nusMods2022.json";
 
 export default function SearchPage({ navigation }) {
         const [filtered, setFiltered] = useState([])
@@ -28,7 +29,7 @@ export default function SearchPage({ navigation }) {
       
         }
         return (
-          <View style={styles.body}>
+          <SafeAreaView style={styles.body}>
       
             <TextInput
               style={styles.textInput}
@@ -60,11 +61,7 @@ export default function SearchPage({ navigation }) {
                 }
 
             </View>
-
-
-            
-          
-            </View>
+            </SafeAreaView>
 
         )
     };
@@ -91,6 +88,7 @@ const styles = StyleSheet.create({
 
     subContainer: {
         //position: 'absolute',
+        //top: '13%',
         backgroundColor: '#84DCC6',
         marginHorizontal: 20,
         borderRadius: 10,

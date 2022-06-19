@@ -11,7 +11,7 @@ import {
 
 
 
-export default function MyProfilePage({ navigation}) {
+export default function EditProfilePage({ navigation}) {
   
   
     return (
@@ -25,13 +25,6 @@ export default function MyProfilePage({ navigation}) {
             source={require('./assets/profilepic.jpeg')}
           />
             <Text style={styles.userName}>Linus Chan</Text>
-            <TouchableOpacity
-                style={styles.userBtn}
-                onPress={() => {
-                  navigation.navigate('EditProfilePage');
-                }}>
-                <Text style={styles.userBtnTxt}>Edit</Text>
-            </TouchableOpacity>
             <View style={styles.userInfoWrapper}>
                 <Text style={styles.userStatus}>“You're braver than you believe, stronger than you seem and smarter than you think.”</Text>
                 <Text style={styles.userInfoHeader}>Timetable</Text>
@@ -47,7 +40,13 @@ export default function MyProfilePage({ navigation}) {
                 <Text>@linuschan</Text>
 
             </View>
-
+            <TouchableOpacity
+                style={styles.userBtn}
+                onPress={() => {
+                  navigation.navigate('MyProfilePage');
+                }}>
+                <Text style={styles.userBtnTxt}>Save</Text>
+            </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     );

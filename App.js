@@ -8,6 +8,7 @@ import PasswordResetPage from './PasswordResetPage';
 import SignUpPage from './SignUpPage';
 import SuccessfulSignUpPage from './SuccessfulSignUpPage'
 import MyProfilePage from './MyProfilePage';
+import EditProfilePage from './EditProfilePage';
 import { BottomTabNavi } from './BottomTabNavi';
 
 const Stack = createStackNavigator();
@@ -56,6 +57,11 @@ function App() {
         <Stack.Screen
           name="MyProfilePage"
           component={MyProfilePage}
+        />
+
+        <Stack.Screen
+          name="EditProfilePage"
+          component={EditProfilePage}
         />
 
       </Stack.Navigator>

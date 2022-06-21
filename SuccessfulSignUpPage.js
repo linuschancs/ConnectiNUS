@@ -10,7 +10,7 @@ import {
 
 export default function SuccessfulSignUpPage({ navigation }) {
     const onPressHandler = () => {
-      navigation.navigate('LoginDetailsPage');
+      navigation.navigate('LoginPage');
     }
   
     return (
@@ -45,7 +45,7 @@ export default function SuccessfulSignUpPage({ navigation }) {
           >
 
             <Text style={styles.text}>
-              Login
+              Proceed
             </Text>
           </Pressable>
 
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 55,
+    width: 75,
     height: 37,
     borderRadius: 10,
-    margin: 5
+    margin: 10
   },
 
   text: {

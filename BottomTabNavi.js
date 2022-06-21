@@ -6,11 +6,7 @@ import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {
-  Pressable,
-  
-} from 'react-native';
-import {Dimensions, View, Text} from 'react-native';
+import {Dimensions, View, Text, Pressable} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 const Tab = createBottomTabNavigator();

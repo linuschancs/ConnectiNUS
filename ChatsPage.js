@@ -17,7 +17,6 @@ export default function ChatsPage({ navigation }) {
     return (
         <View style={styles.body}>
 
-            <Text style={styles.text1}> This is the Chats Page. This page has not been implemented.</Text>
             <Pressable onPress={onPressHandler}
           style={({ pressed }) => [
             { backgroundColor: pressed ? '#ddd' : '#f49d36' },
@@ -39,10 +38,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#4B8BDF',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-
-    text1: {
-        textAlign: 'center',
     },
 
     text2: {

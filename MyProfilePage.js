@@ -18,7 +18,6 @@ export default function MyProfilePage({ navigation}) {
     let auth = getAuth();
     const db = getFirestore();
     const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(true);
     const isFocused = useIsFocused();
     
     const getUser = async() => {

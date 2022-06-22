@@ -39,4 +39,4 @@ export const createUserDocument = async (email, displayName, uid) => {
 
 export const chatsRef = collection(database, "chats");
 
-export const usersRef = collection(database, "users");
+//export const usersRef = collection(database, "users");

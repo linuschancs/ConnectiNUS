@@ -4,20 +4,38 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, TextInput, View, Button } from 'react-native';
-import { app, database, chatsRef, usersRef } from './firebaseConfig';
-import { doc, onSnapshot, query, where, setDoc, Timestamp } from 'firebase/firestore';
+import { app, database, chatsRef } from './firebaseConfig';
+import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 
+export default function InnerChatsPage(navigation) {
 
-
-
-export default function InnerChatsPage() {
     let auth = getAuth();
-
-    const displayName = query((usersRef), where("email", "==" , auth.currentUser.email))
-    const [user, setUser] = useState('null')
-    const [name, setName] = useState('')
+    const db = getFirestore()
+    
     const [messages, setMessages] = useState([])
+
+
+    const [userData, setUserData] = useState(null);
+    const isFocused = useIsFocused();
+    
+    const getUser = async() => {
+        const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if( docSnap.exists() ) {
+            console.log('User Data:', docSnap.data());
+            setUserData(docSnap.data());
+        } else {
+            console.log('No such User Document')
+        }
+      }
+      useEffect(() => {
+          if(isFocused) {
+            getUser();
+          }
+      }, [navigation, isFocused]);
+
 
     useEffect(() => {
         const unsubscribe = onSnapshot(chatsRef, (querySnapshot) => {
@@ -43,12 +61,6 @@ export default function InnerChatsPage() {
         [messages]
     )
 
-    async function handlePress() {
-        const _id = Math.random().toString(36).substring(7)
-        const user = { _id, name }
-        await AsyncStorage.setItem('chats', JSON.stringify(user))
-    }
-
     async function handleSend(messages) {
         const writes = messages.map(async (m) => {
             const messageRef = doc(chatsRef)
@@ -63,7 +75,10 @@ export default function InnerChatsPage() {
         await Promise.all(writes)
     }
 
-    if (user) {
+    if ('notnull') {
+        const email = auth.currentUser.email
+        const name = userData ? userData.displayName : 'null'
+        const user = { email, name}
         return <GiftedChat messages={messages} user={user} onSend={handleSend} />
 }
 

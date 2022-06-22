@@ -14,6 +14,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 
 export default function MyProfilePage({ navigation}) {
+  
 
     let auth = getAuth();
     const db = getFirestore();

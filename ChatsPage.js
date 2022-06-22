@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
+    text1: {
+        textAlign: 'center',
+    },
+
     text2: {
         width:100,
         textAlign: 'center',

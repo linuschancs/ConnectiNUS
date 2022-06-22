@@ -47,6 +47,9 @@ function App() {
         <Stack.Screen
           name="SuccessfulSignUpPage"
           component={SuccessfulSignUpPage}
+          options={({ navigation, route }) => ({
+            headerShown: false
+          })}
         />
 
         <Stack.Screen

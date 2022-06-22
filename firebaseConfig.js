@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-
+import {getStorage} from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRw8HAEMuCYtxtZnAnmqxfHzu5MTmsFf4",
@@ -14,20 +14,18 @@ const firebaseConfig = {
   measurementId: "G-XLRTCGK3HD"
 };
 
-
 export const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const database = getFirestore(app);
-export const createUserDocument = async (email, displayName, password, uid) => {
+export const createUserDocument = async (email, displayName, uid) => {
   const userRef = doc(collection(database, "users"), uid);
     try {
       await setDoc(userRef, {
         displayName: displayName,
         email: email,
-        password: password,
         uid: uid,
-        year: '',
-        major: '',
+        yearMajor: '',
         userStatus: '',
         profilePic: '',
         telegramHandle: '',

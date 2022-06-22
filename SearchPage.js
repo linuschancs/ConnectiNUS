@@ -8,10 +8,13 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import ModData from "./nusMods2022.json";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function SearchPage({ navigation }) {
+        const [text, setText] = useState("");
         const [filtered, setFiltered] = useState([])
         const [searching, setSearching] = useState(false)
+        const [module, setModule] = useState('')
 
         const onSearch = (text) => {
           if (text === "") {
@@ -22,7 +25,7 @@ export default function SearchPage({ navigation }) {
             setSearching(true)
             const temp = text.toUpperCase()
             const tempList = ModData.filter(item => {
-         return item.moduleCode.includes(temp)
+                return item.moduleCode.includes(temp)
             })
             setFiltered(tempList)
           }
@@ -30,22 +33,38 @@ export default function SearchPage({ navigation }) {
         }
         return (
           <SafeAreaView style={styles.body}>
-      
-            <TextInput
-              style={styles.textInput}
-              placeholder="Search..."
-              placeholderTextColor='white'
-              onChangeText={onSearch}
-      
-            />
-
+            <View style={styles.container}>
+                <TextInput
+                style={styles.textInput}
+                placeholder="Search..."
+                placeholderTextColor='white'
+                value={text}
+                onChangeText={(value) => {onSearch(value); setText(value);}}
+                />
+                <TouchableOpacity
+                style={styles.clearButton}
+                onPress={() => {setSearching(false); setFiltered([]); setModule(''); setText('');}}
+                >
+                  <FontAwesome5
+                    name="times-circle"
+                    size={30}
+                    color="#fff"
+                    style={{
+                      opacity: 0.8,
+                      borderWidth: 1,
+                      borderColor: '#fff',
+                      borderRadius: 10,
+                    }}
+                  />
+                </TouchableOpacity>
+            </View>
             <View style={styles.subContainer}>
                 {
                     filtered.length !== 0 ?
 
                         filtered.slice(0,5).map(item => {
                             return (
-                                <TouchableOpacity style={styles.itemView}>
+                                <TouchableOpacity style={styles.itemView} onPress={() => {setModule(item); setFiltered([]); setSearching(false);}}>
                                     <Text style={styles.itemText}>{item.moduleCode}</Text>
                                 </TouchableOpacity>
                             )
@@ -59,8 +78,22 @@ export default function SearchPage({ navigation }) {
                         </View>
                         : <View></View>
                 }
-
             </View>
+                {
+                    module ?
+                    <View style={styles.moduleCard}>
+                        <Text style={styles.moduleHeader}>{module.moduleCode}</Text>
+                        <Text style={styles.moduleInfo}>{module.title}</Text>
+                        <Text style={styles.moduleNumber}>Number of Chat Users: 0</Text>
+                        <TouchableOpacity
+                            style={styles.userBtn}
+                        >
+                            <Text style={styles.userBtnTxt}>Join Chat</Text>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <View></View>
+                }
             </SafeAreaView>
 
         )
@@ -77,7 +110,7 @@ const styles = StyleSheet.create({
 
     textInput: {
         backgroundColor: '#BFBFBF',
-        width: '80%',
+        width: '100%',
         borderRadius: 10,
         height: 50,
         fontSize: 20,
@@ -85,23 +118,31 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         top: '5%',
       },
-
+    container: {
+        position: 'absolute',
+        top: '5%',
+        width: '80%',
+        alignItems: 'center',
+    },
+    clearButton: {
+        alignSelf: 'flex-end',
+        right: '5%',
+        bottom: '43%'
+    },
     subContainer: {
-        //position: 'absolute',
-        //top: '13%',
+        position: 'absolute',
         backgroundColor: '#84DCC6',
         marginHorizontal: 20,
         borderRadius: 10,
         flexWrap: 'wrap',
-        top: '5%',
+        top: '14%',
         width: '80%',
-
         justifyContent: 'center',
         alignItems: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
+        zIndex: 1,
     },
     itemView: {
-        //marginHorizontal: '10%',
         backgroundColor: 'white',
         height: 30,
         width: '90%',
@@ -121,11 +162,51 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
     },
     noResultText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
+    },
+    moduleCard: {
+        position: 'absolute',
+        top: '20%',
+        backgroundColor: '#fff',
+        height: 200,
+        width: 300,
+        borderRadius: 20,
+        shadowOpacity: 0.3,
+    },
+    moduleHeader: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        top: '5%',
+        left: '5%',
+        flex: 1
+    },
+    moduleInfo:{
+        flex: 1,
+        left: '5%'
+    },
+    moduleNumber: {
+        flex: 1,
+        left: '5%',
+        bottom: '5%'
+    },
+    userBtn: {
+        bottom: '5%',
+        alignSelf: 'center',
+        width: 80,
+        borderColor: '#2e64e5',
+        borderWidth: 2,
+        borderRadius: 3,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginHorizontal: 5,
+    },
+    userBtnTxt: {
+    textAlign: 'center',
+    color: '#2e64e5',
     },
 })

@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Pressable,
+  ScrollView
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth } from "firebase/auth";
@@ -51,37 +52,60 @@ export default function ChatsPage({ navigation }) {
     }
 
     return (
-        <View style={styles.body}>
+        <ScrollView style={styles.body} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}>
 
             <Pressable onPress={onPressHandler}
-          style={({ pressed }) => [
-            { backgroundColor: pressed ? '#ddd' : '#f49d36' },
-            styles.button,
-          ]}
-          >
-            <Text style={styles.text2}>
-              Join Chatroom
+            style={({ pressed }) => [
+              { backgroundColor: pressed ? '#ddd' : '#fff' },
+              styles.button,
+            ]}
+            >
+            <View style={styles.groupPic}>
+              <Text style={styles.groupText}>CS</Text>
+            </View>
+
+            <Text style={styles.text1}>
+              CS1101S
             </Text>
           </Pressable>
                   
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     body: {
-      flex:1,
+      //flex:1,
       backgroundColor: '#4B8BDF',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
-
+    groupPic: {
+        position: 'absolute',
+        top: '20%',
+        left: '5%',
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        backgroundColor: '#badfda'
+    },
+    button: {
+      position: 'absolute',
+      top: '10%',
+      backgroundColor: '#fff',
+      height: 100,
+      width: 300,
+      borderRadius: 20,
+      shadowOpacity: 0.3,
+    },
     text1: {
-        textAlign: 'center',
+      position: 'absolute',
+      top: '30%',
+      fontWeight: 'bold',
+      fontSize: 30,
+      left: '30%',
     },
-
-    text2: {
-        width:100,
-        textAlign: 'center',
+    groupText: {
+      top: '20%',
+      left: '20%',
+      fontSize: 30
     }
 })

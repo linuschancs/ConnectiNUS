@@ -37,6 +37,11 @@ export default function InnerChatsPage({route, navigation}) {
           }
       }, [navigation, isFocused]);
     
+    const onPress = () => {
+        navigation.navigate('OtherUserProfilePage')
+    }
+
+    
       
 
 
@@ -78,7 +83,7 @@ export default function InnerChatsPage({route, navigation}) {
 
         await Promise.all(writes)
     }
-    return <GiftedChat messages={messages} user={user} onSend={handleSend} />
+    return <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPress} user={user} onSend={handleSend} />
 }
 
 async function readUser() {

@@ -11,6 +11,7 @@ import MyProfilePage from './MyProfilePage';
 import EditProfilePage from './EditProfilePage';
 import { BottomTabNavi } from './BottomTabNavi';
 import InnerChatsPage from './InnerChatsPage';
+import OtherUserProfilePage from './OtherUserProfilePage';
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,11 @@ function App() {
         <Stack.Screen
           name="EditProfilePage"
           component={EditProfilePage}
+        />
+
+        <Stack.Screen
+          name="OtherUserProfilePage"
+          component={OtherUserProfilePage}
         />
 
       </Stack.Navigator>

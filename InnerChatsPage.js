@@ -9,11 +9,12 @@ import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collect
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
 
-export default function InnerChatsPage(navigation) {
+export default function InnerChatsPage({route, navigation}) {
 
     let auth = getAuth();
     const db = getFirestore()
-    
+    const {user} = route.params;
+    console.log(user)    
     const [messages, setMessages] = useState([])
 
 
@@ -35,9 +36,12 @@ export default function InnerChatsPage(navigation) {
             getUser();
           }
       }, [navigation, isFocused]);
+    
+      
 
 
     useEffect(() => {
+        readUser()
         const unsubscribe = onSnapshot(chatsRef, (querySnapshot) => {
             const messagesFirestore = querySnapshot.docChanges()
                 .filter(({ type }) => type === 'added')
@@ -74,13 +78,16 @@ export default function InnerChatsPage(navigation) {
 
         await Promise.all(writes)
     }
-
-    if ('notnull') {
-        const email = auth.currentUser.email
-        const name = userData ? userData.displayName : 'null'
-        const user = { email, name}
-        return <GiftedChat messages={messages} user={user} onSend={handleSend} />
+    return <GiftedChat messages={messages} user={user} onSend={handleSend} />
 }
+
+async function readUser() {
+    const user = await AsyncStorage.getItem('user')
+    if (user) {
+        setUser(JSON.parse(user))
+    }
+}
+
 
 const styles = StyleSheet.create({
     container: {
@@ -99,4 +106,3 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
     },
 })
-}

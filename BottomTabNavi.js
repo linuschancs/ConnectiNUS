@@ -78,13 +78,15 @@ export function BottomTabNavi({ navigation }) {
             fontWeight: 'bold',
           },
           tabBarStyle: {
-            height: 60,
+            height: '10%',
             position: 'absolute',
             bottom: '2%',
+            justifyContent: 'flex-end',
             right: 15,
             left: 15,
             borderRadius: 15,
             backgroundColor:"#FFFF",
+            alignItems: 'center'
           },
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
@@ -119,19 +121,19 @@ export function BottomTabNavi({ navigation }) {
         <Tab.Screen
         name="SearchPage"
         component={SearchPage}
-        options = {{title: "Search", tabBarLabel:"Search", tabBarLabelStyle: {paddingBottom: 5}, headerStyle:{height: 75}}}/>
+        options = {{title: "Search", tabBarLabel:"Search", headerStyle:{height: 75}}}/>
         <Tab.Screen
         name='ChatsPage'
         component={ChatsPage}
-        options = {{title: "Chats", tabBarLabel:"Chats", tabBarLabelStyle: {paddingBottom: 5}, headerStyle:{height: 75}}}/>
+        options = {{title: "Chats", tabBarLabel:"Chats", headerStyle:{height: 75}}}/>
         <Tab.Screen
         name="FriendsPage"
         component={FriendsPage}
-        options = {{title: "Friends", tabBarLabel:"Friends", tabBarLabelStyle: {paddingBottom: 5}, headerStyle:{height: 75}}}/>
+        options = {{title: "Friends", tabBarLabel:"Friends", headerStyle:{height: 75}}}/>
         <Tab.Screen
         name='SettingsPage'
         component={SettingsPage}
-        options = {{title: "Settings", tabBarLabel:"Settings", tabBarLabelStyle: {paddingBottom: 5}, headerStyle:{height: 75}}}/>
+        options = {{title: "Settings", tabBarLabel:"Settings",  headerStyle:{height: 75}}}/>
       </Tab.Navigator>
   
       );

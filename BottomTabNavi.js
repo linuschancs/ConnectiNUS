@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Image,
     Dimensions,
-    Pressable
+    Pressable,
   } from 'react-native';
 import { database, collection, getFirestore, doc,  getDoc } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
@@ -16,10 +16,12 @@ import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+
 const {width, height} = Dimensions.get('window');
 const Tab = createBottomTabNavigator();
 
 export function BottomTabNavi({ navigation }) {
+  
   let auth = getAuth();
   const db = getFirestore();
   const [userData, setUserData] = useState(null);
@@ -55,8 +57,9 @@ export function BottomTabNavi({ navigation }) {
             <Pressable onPress={onPressHandler}
             style={{
                 position: 'absolute',
+                top: '10%',
                 padding: 5,
-                right: 20,
+                right: '10%',
                 borderWidth:1,
                 borderColor:'rgba(0,0,0,0.2)',
                 width: 40,
@@ -77,17 +80,23 @@ export function BottomTabNavi({ navigation }) {
           headerTintColor: '#275B9F',
           headerTitleStyle: {
             fontWeight: 'bold',
+            position: 'absolute',
+            alignSelf: 'center',
+            top: 10,
           },
           tabBarStyle: {
             height: '10%',
             position: 'absolute',
-            bottom: '2%',
-            justifyContent: 'flex-end',
-            right: 15,
-            left: 15,
-            borderRadius: 15,
+            //bottom: '2%',
+            justifyContent: 'center',
+            //right: 15,
+            //left: 15,
+            //borderRadius: 15,
             backgroundColor:"#FFFF",
             alignItems: 'center'
+          },
+          tabBarLabelStyle: {
+            marginBottom: '5%',
           },
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
@@ -122,19 +131,19 @@ export function BottomTabNavi({ navigation }) {
         <Tab.Screen
         name="SearchPage"
         component={SearchPage}
-        options = {{title: "Search", tabBarLabel:"Search", headerStyle:{height: 75}}}/>
+        options = {{title: "Search", tabBarLabel:"Search", headerStyle:{height: '10%'}}}/>
         <Tab.Screen
         name='ChatsPage'
         component={ChatsPage}
-        options = {{title: "Chats", tabBarLabel:"Chats", headerStyle:{height: 75}}}/>
+        options = {{title: "Chats", tabBarLabel:"Chats", headerStyle:{height: '10%'}}}/>
         <Tab.Screen
         name="FriendsPage"
         component={FriendsPage}
-        options = {{title: "Friends", tabBarLabel:"Friends", headerStyle:{height: 75}}}/>
+        options = {{title: "Friends", tabBarLabel:"Friends", headerStyle:{height: '10%'}}}/>
         <Tab.Screen
         name='SettingsPage'
         component={SettingsPage}
-        options = {{title: "Settings", tabBarLabel:"Settings",  headerStyle:{height: 75}}}/>
+        options = {{title: "Settings", tabBarLabel:"Settings",  headerStyle:{height: '10%'}}}/>
       </Tab.Navigator>
   
       );

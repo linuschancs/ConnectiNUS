@@ -1,13 +1,14 @@
 {
   "expo": {
+    "owner": "linuschan",
     "name": "connectinus",
     "slug": "connectinus",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/squarelogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/squarelogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,7 +32,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/squarelogo.png",
         "backgroundColor": "#FFFFFF"
       }
     },

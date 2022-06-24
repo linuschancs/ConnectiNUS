@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from 'react';
 import {
     StyleSheet,
     Image,
+    Dimensions,
+    Pressable
   } from 'react-native';
 import { database, collection, getFirestore, doc,  getDoc } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
@@ -13,7 +15,6 @@ import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
 import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Dimensions, View, Text, Pressable} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 const Tab = createBottomTabNavigator();

@@ -13,10 +13,8 @@ export default function InnerChatsPage({route, navigation}) {
 
     let auth = getAuth();
     const db = getFirestore()
-    const {user} = route.params;
-    console.log(user)    
+    const {user} = route.params;  
     const [messages, setMessages] = useState([])
-
 
     const [userData, setUserData] = useState(null);
     const isFocused = useIsFocused();
@@ -31,22 +29,18 @@ export default function InnerChatsPage({route, navigation}) {
             console.log('No such User Document')
         }
       }
-      useEffect(() => {
-          if(isFocused) {
-            getUser();
-          }
-      }, [navigation, isFocused]);
+    useEffect(() => {
+        if(isFocused) {
+        getUser();
+        }
+    }, [navigation, isFocused]);
     
-    const onPress = () => {
+    const onPressUser = () => {
         navigation.navigate('OtherUserProfilePage')
     }
 
-    
-      
-
 
     useEffect(() => {
-        readUser()
         const unsubscribe = onSnapshot(chatsRef, (querySnapshot) => {
             const messagesFirestore = querySnapshot.docChanges()
                 .filter(({ type }) => type === 'added')
@@ -83,15 +77,9 @@ export default function InnerChatsPage({route, navigation}) {
 
         await Promise.all(writes)
     }
-    return <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPress} user={user} onSend={handleSend} />
+    return <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPressUser} user={user} onSend={handleSend} />
 }
 
-async function readUser() {
-    const user = await AsyncStorage.getItem('user')
-    if (user) {
-        setUser(JSON.parse(user))
-    }
-}
 
 
 const styles = StyleSheet.create({

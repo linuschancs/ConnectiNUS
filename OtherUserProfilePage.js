@@ -8,32 +8,31 @@ import {
     ScrollView,
     SafeAreaView,
   } from 'react-native';
-import { database, collection, getFirestore, doc, setDoc, query, where, getDoc } from "firebase/firestore";   
+import { database, collection, getFirestore, query, where, onSnapshot } from "firebase/firestore";   
 import { useIsFocused } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
+import { async } from '@firebase/util';
 
-export default function OtherUserProfilePage({ navigation }) {
+export default function OtherUserProfilePage({ route, navigation }) {
     
-    let auth = getAuth();
     const db = getFirestore();
+    const {user} = route.params; 
     const [userData, setUserData] = useState(null);
     const isFocused = useIsFocused();
-    
-    const getUser = async() => {
-        const docRef = doc(collection(db, "users"), auth.currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        if( docSnap.exists() ) {
-            console.log('User Data:', docSnap.data());
-            setUserData(docSnap.data());
-        } else {
-            console.log('No such User Document')
-        }
+
+    const getUser = async () => {
+        const q = query(collection(db, "users"), where("email", "==", user._id));
+        const temp =  await onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                setUserData(doc.data());
+            });
+        });
       }
-      useEffect(() => {
-          if(isFocused) {
-            getUser();
-          }
-      }, [navigation, isFocused]);
+    useEffect(() => {
+        if(isFocused) {
+          getUser();
+        }
+    }, [navigation, isFocused]);
 
     return (
       <SafeAreaView style={styles.body}>

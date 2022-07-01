@@ -8,7 +8,6 @@ import { app, database, chatsRef } from './firebaseConfig';
 import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
-import ChatHeader from './components/ChatHeader';
 
 export default function InnerChatsPage({route, navigation}) {
 
@@ -36,8 +35,8 @@ export default function InnerChatsPage({route, navigation}) {
         }
     }, [navigation, isFocused]);
     
-    const onPressUser = () => {
-        navigation.navigate('OtherUserProfilePage')
+    const onPressUser = (user) => {
+        navigation.navigate('OtherUserProfilePage', {user})
     }
 
 

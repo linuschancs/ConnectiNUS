@@ -51,6 +51,7 @@ export default function EditProfilePage({ navigation }) {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
       yearMajor: userData.yearMajor,
+      NUSModsTimetable: timetableURL,
       profilePic: imgUrl,
       telegramHandle: userData.telegramHandle,
       userStatus: userData.userStatus,
@@ -296,6 +297,17 @@ export default function EditProfilePage({ navigation }) {
             onChangeText={(txt) => setUserData({...userData, userStatus: txt})}
             autoCorrect={true}
             style={[styles.textInput, {height: 40}]}
+          />
+        </View>
+        <View style={styles.action}>
+          <FontAwesome5 name="sync" color="#333333" size={20} style={[{alignSelf: 'center'}]} />
+          <TextInput
+            placeholder="NUSMods Sharing Link"
+            placeholderTextColor="#666666"
+            value={userData ? userData.NUSModsLink : ''}
+            onChangeText={(txt) => setUserData({...userData, NUSModsLink: txt})}
+            autoCorrect={false}
+            style={styles.textInput}
           />
         </View>
         <View style={styles.action}>

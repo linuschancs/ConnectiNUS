@@ -52,11 +52,11 @@ export default function OtherUserProfilePage({ route, navigation }) {
             </TouchableOpacity>
             <View style={styles.userInfoWrapper}>
                 {userData ? (userData.userStatus ? <Text style={styles.userStatus}>{userData.userStatus}</Text> : <View></View>): <View></View>}
-                <Text style={styles.userInfoHeader}>Timetable</Text>
-                <Image style={styles.timetable}
+                {userData ? (userData.NUSModsLink ? <Text style={styles.userInfoHeader}>Timetable</Text> : <View></View>): <View></View>}
+                {userData ? (userData.NUSModsLink ? <Image style={styles.timetable}
                     resizeMode= 'contain'
-                    source={require('./assets/timetable.png')}>
-                </Image>
+                    source={{uri: userData.NUSModsTimetable}}>
+                </Image> : <View></View>): <View></View>}
                 {userData ? (userData.yearMajor ? <Text style={styles.userInfoHeader}>Year, Major</Text> : <View></View>): <View></View>}
                 {userData ? (userData.yearMajor ? <Text>{userData.yearMajor}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.email ? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}

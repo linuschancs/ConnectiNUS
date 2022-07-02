@@ -30,6 +30,7 @@ export const createUserDocument = async (email, displayName, uid) => {
         profilePic: '',
         telegramHandle: '',
         NUSModsLink: '',
+        NUSModsTimetable: '',
         createdAt: new Date(),
       });
     } catch(error) {

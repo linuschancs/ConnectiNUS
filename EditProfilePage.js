@@ -15,7 +15,8 @@ import {
   import * as ImagePicker from 'expo-image-picker';
   import { collection, getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";   
   import { getAuth } from "firebase/auth";
-  import {ref, getStorage, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
+  import {ref, getStorage, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
+  import { Avatar } from 'react-native-paper';
 
 
 export default function EditProfilePage({ navigation }) {
@@ -51,7 +52,7 @@ export default function EditProfilePage({ navigation }) {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
       yearMajor: userData.yearMajor,
-      NUSModsTimetable: timetableURL,
+      //NUSModsTimetable: timetableURL,
       profilePic: imgUrl,
       telegramHandle: userData.telegramHandle,
       userStatus: userData.userStatus,
@@ -211,6 +212,7 @@ export default function EditProfilePage({ navigation }) {
 
     return (
       <View style={styles.container}>
+        
       <BottomSheet
         ref={bs}
         snapPoints={[330, -5]}

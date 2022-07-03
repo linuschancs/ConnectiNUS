@@ -29,7 +29,7 @@ export default function SignUpPage({ navigation }) {
         .then((response) => {
            console.log(response.user)
            sendEmailVerification(auth.currentUser);
-           createUserDocument(email, displayName, auth.currentUser.uid);
+           createUserDocument(email, displayName, auth.currentUser.uid, pastel);
            navigation.navigate('SuccessfulSignUpPage');
          })
          .catch((err) => {
@@ -40,6 +40,9 @@ export default function SignUpPage({ navigation }) {
         console.log('Password Mismatch')
       }
     };
+
+    const hue = Math.floor(Math.random() * 360);
+    const pastel = 'hsl(' + hue + ', 100%, 80%)';
   
     return (
       <SafeAreaView style={styles.body}>      
@@ -135,8 +138,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   nusLogo: {
@@ -170,8 +173,8 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 5,
     paddingLeft: 8,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
 });

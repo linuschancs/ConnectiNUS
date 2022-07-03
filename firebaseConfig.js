@@ -18,7 +18,7 @@ export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const database = getFirestore(app);
-export const createUserDocument = async (email, displayName, uid) => {
+export const createUserDocument = async (email, displayName, uid, userColor) => {
   const userRef = doc(collection(database, "users"), uid);
     try {
       await setDoc(userRef, {
@@ -32,6 +32,7 @@ export const createUserDocument = async (email, displayName, uid) => {
         NUSModsLink: '',
         NUSModsTimetable: '',
         createdAt: new Date(),
+        userColor: userColor,
       });
     } catch(error) {
       console.log('Error in creating user', error);

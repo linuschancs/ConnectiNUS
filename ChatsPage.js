@@ -13,9 +13,6 @@ import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collect
 import { useIsFocused } from "@react-navigation/native";
 
 
-
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
 export default function ChatsPage({ navigation }) {
     let auth = getAuth();
     const db = getFirestore()

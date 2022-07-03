@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import { StyleSheet, TextInput, View, Button, Pressable, Text } from 'react-native';
 import { app, database, chatsRef } from './firebaseConfig';
 import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
@@ -35,8 +34,8 @@ export default function InnerChatsPage({route, navigation}) {
         }
     }, [navigation, isFocused]);
     
-    const onPressUser = () => {
-        navigation.navigate('OtherUserProfilePage')
+    const onPressUser = (user) => {
+        navigation.navigate('OtherUserProfilePage', {user})
     }
 
 
@@ -77,7 +76,17 @@ export default function InnerChatsPage({route, navigation}) {
 
         await Promise.all(writes)
     }
-    return <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPressUser} user={user} onSend={handleSend} />
+    const onPressGroup = () => {
+        navigation.navigate('ChatGroupDetails');
+    }
+    return (
+        <View style={{flex: 1}}>
+            <Pressable style={styles.header} onPress={onPressGroup}>
+              <Text style={styles.headertext}>CS1101S</Text>
+            </Pressable>
+            <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPressUser} user={user} onSend={handleSend} />
+        </View>
+    )
 }
 
 
@@ -98,4 +107,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderColor: 'gray',
     },
+    header: {
+        width: '100%',
+        height: '10%',
+        backgroundColor: '#6EB5FF',
+        alignItems: 'center',
+    },
+    headertext: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        top: '40%'
+    }
 })

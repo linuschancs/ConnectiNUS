@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   nusLogo: {
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     height: 35,
     margin: 5,
     padding:10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
 
   },
 

@@ -12,6 +12,7 @@ import EditProfilePage from './EditProfilePage';
 import { BottomTabNavi } from './BottomTabNavi';
 import InnerChatsPage from './InnerChatsPage';
 import OtherUserProfilePage from './OtherUserProfilePage';
+import ChatGroupDetails from './ChatGroupDetails';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,11 @@ function App() {
         <Stack.Screen
           name="OtherUserProfilePage"
           component={OtherUserProfilePage}
+        />
+
+        <Stack.Screen
+          name="ChatGroupDetails"
+          component={ChatGroupDetails}
         />
 
       </Stack.Navigator>

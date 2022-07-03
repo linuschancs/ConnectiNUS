@@ -42,6 +42,10 @@ export default function EditProfilePage({ navigation }) {
       }
     }
   const handleUpdate = async() => {
+    if(userData.displayName == "") {
+      alert("Please input a valid display name")
+      return;
+    }
     let imgUrl = await uploadImage();
     
     if( imgUrl == null && userData.profilePic ) {

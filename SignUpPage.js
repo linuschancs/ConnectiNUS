@@ -21,7 +21,10 @@ export default function SignUpPage({ navigation }) {
     const [displayName, setDisplayName] = useState('')
 
     const onPressHandler = () => {
-      if (password1 == password2) {
+      if (displayName == "") {
+        console.log("No Display Name")
+        alert("Please enter a valid display name.");
+      } else if (password1 == password2) {
         createUserWithEmailAndPassword(auth, email, password1)
         .then((response) => {
            console.log(response.user)

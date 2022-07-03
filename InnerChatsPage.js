@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, TextInput, View, Button, Pressable, Text } from 'react-native';
 import { app, database, chatsRef } from './firebaseConfig';
 import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';

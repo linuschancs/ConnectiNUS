@@ -8,7 +8,7 @@ import {
     ScrollView,
     SafeAreaView,
   } from 'react-native';
-import { database, collection, getFirestore, doc, setDoc, query, where, getDoc } from "firebase/firestore";   
+import { collection, getFirestore, doc, getDoc } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -63,7 +63,6 @@ export default function MyProfilePage({ navigation}) {
                     resizeMode= 'contain'
                     source={{uri: userData.NUSModsTimetable}}>
                 </Image> : <View></View>): <View></View>}
-
                 {userData ? (userData.yearMajor ? <Text style={styles.userInfoHeader}>Year, Major</Text> : <View></View>): <View></View>}
                 {userData ? (userData.yearMajor ? <Text>{userData.yearMajor}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.email ? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}

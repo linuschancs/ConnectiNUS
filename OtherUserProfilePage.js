@@ -10,8 +10,6 @@ import {
   } from 'react-native';
 import { database, collection, getFirestore, query, where, onSnapshot } from "firebase/firestore";   
 import { useIsFocused } from "@react-navigation/native";
-import { getAuth } from "firebase/auth";
-import { async } from '@firebase/util';
 
 export default function OtherUserProfilePage({ route, navigation }) {
     
@@ -25,6 +23,7 @@ export default function OtherUserProfilePage({ route, navigation }) {
         const temp =  await onSnapshot(q, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 setUserData(doc.data());
+                console.log(doc.data());
             });
         });
       }

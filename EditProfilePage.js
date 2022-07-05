@@ -40,7 +40,7 @@ export default function EditProfilePage({ navigation }) {
       } else {
           console.log('No such User Document')
       }
-    }
+  }
   const handleUpdate = async() => {
     if(userData.displayName == "") {
       alert("Please input a valid display name")
@@ -213,6 +213,10 @@ export default function EditProfilePage({ navigation }) {
     
     bs = React.createRef();
     fall = new Animated.Value(1);
+    
+    const getNUSModsTimetable = (sharelink) => {
+      
+    }
 
     return (
       <View style={styles.container}>

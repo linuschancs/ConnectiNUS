@@ -33,6 +33,7 @@ export const createUserDocument = async (email, displayName, uid, userColor) => 
         NUSModsTimetable: '',
         createdAt: new Date(),
         userColor: userColor,
+        userChatGroups: [],
       });
     } catch(error) {
       console.log('Error in creating user', error);

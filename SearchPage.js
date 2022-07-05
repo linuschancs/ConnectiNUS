@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     StyleSheet,
     SafeAreaView,
@@ -6,15 +6,35 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import ModData from "./nusMods2022.json";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { collection, getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";   
+import { getAuth } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SearchPage({ navigation }) {
         const [text, setText] = useState("");
         const [filtered, setFiltered] = useState([])
         const [searching, setSearching] = useState(false)
         const [module, setModule] = useState('')
+        const [userData, setUserData] = useState(null);
+        const isFocused = useIsFocused();
+        
+        let auth = getAuth();
+        const db = getFirestore();
+
+        const getUser = async() => {
+            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            if( docSnap.exists() ) {
+                console.log('User Data:', docSnap.data());
+                setUserData(docSnap.data());
+            } else {
+                console.log('No such User Document')
+            }
+        }
 
         const onSearch = (text) => {
           if (text === "") {
@@ -31,6 +51,30 @@ export default function SearchPage({ navigation }) {
           }
       
         }
+
+        const joinGroup = (moduleCode) => {
+            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const temp = userData.userChatGroups;
+            userData.userChatGroups.push(moduleCode);
+            updateDoc(docRef, {
+                    userChatGroups: temp,
+            })
+            .then(() => {
+                getUser();
+                console.log('Chat Group Joined!');
+                console.log(userData.userChatGroups)
+                Alert.alert(
+                    'Chat Group Joined!',
+                    'You have successfully joined this chat group.'
+            );
+            })
+        }
+        useEffect(() => {
+            if(isFocused) {
+              getUser();
+            }
+        }, [navigation, isFocused]);
+
         return (
           <SafeAreaView style={styles.body}>
             <View style={styles.container}>
@@ -85,11 +129,22 @@ export default function SearchPage({ navigation }) {
                         <Text style={styles.moduleHeader}>{module.moduleCode}</Text>
                         <Text style={styles.moduleInfo}>{module.title}</Text>
                         <Text style={styles.moduleNumber}>Number of Chat Users: 0</Text>
-                        <TouchableOpacity
+                        {
+                            userData.userChatGroups.includes(module.moduleCode) ?
+                            <TouchableOpacity
                             style={styles.userBtn}
-                        >
+                            >
+                            <Text style={styles.userBtnTxt}>Chat Joined</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                            style={styles.userBtn} onPress={() => joinGroup(module.moduleCode)}
+                            >
                             <Text style={styles.userBtnTxt}>Join Chat</Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+
+                        }
+
                     </View>
                     :
                     <View></View>
@@ -135,7 +190,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         borderRadius: 10,
         flexWrap: 'wrap',
-        top: '14%',
+        top: '11.5%',
         width: '80%',
         justifyContent: 'center',
         alignItems: 'center',

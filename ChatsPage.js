@@ -13,6 +13,7 @@ import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collect
 import { useIsFocused } from "@react-navigation/native";
 
 
+
 export default function ChatsPage({ navigation }) {
     let auth = getAuth();
     const db = getFirestore()
@@ -37,56 +38,65 @@ export default function ChatsPage({ navigation }) {
       }, [navigation, isFocused]);
 
 
-
-    async function onPressHandler() {
+    async function onPressHandler(module) {
       const _id = auth.currentUser.email
       const name = userData ? userData.displayName : 'null' 
       const user = { _id, name }
       await AsyncStorage.setItem('user', JSON.stringify(user))
       setUser(user)
-      navigation.navigate('InnerChatsPage', {user});
-
+      navigation.navigate('InnerChatsPage', {user, module});
     }
+
+
 
     return (
         <ScrollView style={styles.body} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}>
+          {userData ?
+            userData.userChatGroups.map(element => {
+              return (                
+              <Pressable onPress={() => onPressHandler(element)}
+                style={({ pressed }) => [
+                  { backgroundColor: pressed ? '#ddd' : '#fff' },
+                  styles.button,
+                ]}
+                >
+                <View style={{
+                  backgroundColor: 'hsl(' + Math.floor(Math.random() * 360) + ', 100%, 80%)',
+                  position: 'absolute',
+                  top: '20%',
+                  left: '5%',
+                  height: 60,
+                  width: 60,
+                  borderRadius: 30,
+                  }}>
+                  <Text style={styles.groupText}>{element.substring(0,2)}</Text>
+                </View>
 
-            <Pressable onPress={onPressHandler}
-            style={({ pressed }) => [
-              { backgroundColor: pressed ? '#ddd' : '#fff' },
-              styles.button,
-            ]}
-            >
-            <View style={styles.groupPic}>
-              <Text style={styles.groupText}>CS</Text>
-            </View>
-
-            <Text style={styles.text1}>
-              CS1101S
-            </Text>
-          </Pressable>
-                  
+                <Text style={styles.text1}>
+                  {element}
+                </Text>
+              </Pressable>);
+          })
+          :
+          <View style={styles.groupPic}>
+            <Text style={styles.groupText}>You have not joined any chat groups!</Text>
+          </View>
+          }
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     body: {
-      //flex:1,
+      flex:1,
       backgroundColor: '#4B8BDF',
     },
     groupPic: {
-        position: 'absolute',
-        top: '20%',
-        left: '5%',
-        height: 60,
-        width: 60,
-        borderRadius: 30,
-        backgroundColor: '#badfda'
+
     },
     button: {
-      position: 'absolute',
-      top: '10%',
+      bottom: '10%',
+      marginVertical: '5%',
       backgroundColor: '#fff',
       height: 100,
       width: 300,

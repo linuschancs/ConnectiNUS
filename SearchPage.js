@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     StyleSheet,
     SafeAreaView,
@@ -6,15 +6,35 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import ModData from "./nusMods2022.json";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query } from "firebase/firestore";   
+import { getAuth } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SearchPage({ navigation }) {
         const [text, setText] = useState("");
         const [filtered, setFiltered] = useState([])
         const [searching, setSearching] = useState(false)
         const [module, setModule] = useState('')
+        const [userData, setUserData] = useState(null);
+        const isFocused = useIsFocused();
+        
+        let auth = getAuth();
+        const db = getFirestore();
+
+        const getUser = async() => {
+            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            if( docSnap.exists() ) {
+                console.log('User Data:', docSnap.data());
+                setUserData(docSnap.data());
+            } else {
+                console.log('No such User Document')
+            }
+        }
 
         const onSearch = (text) => {
           if (text === "") {
@@ -31,6 +51,36 @@ export default function SearchPage({ navigation }) {
           }
       
         }
+
+        const joinGroup = (moduleCode) => {
+            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const moduleUsersRef = doc(collection(doc(collection(db, "chats"), moduleCode), "users"), auth.currentUser.uid);
+            setDoc(moduleUsersRef, {
+                displayName: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+            });
+            const temp = userData.userChatGroups;
+            userData.userChatGroups.push(moduleCode);
+            updateDoc(docRef, {
+                    userChatGroups: temp,
+            })
+            .then(() => {
+                getUser();
+                console.log('Chat Group Joined!');
+                console.log(userData.userChatGroups)
+                Alert.alert(
+                    'Chat Group Joined!',
+                    'You have successfully joined this chat group.'
+            );
+            })
+        }
+        useEffect(() => {
+            if(isFocused) {
+              getUser();
+            }
+        }, [navigation, isFocused]);
+
         return (
           <SafeAreaView style={styles.body}>
             <View style={styles.container}>
@@ -84,12 +134,24 @@ export default function SearchPage({ navigation }) {
                     <View style={styles.moduleCard}>
                         <Text style={styles.moduleHeader}>{module.moduleCode}</Text>
                         <Text style={styles.moduleInfo}>{module.title}</Text>
-                        <Text style={styles.moduleNumber}>Number of Chat Users: 0</Text>
-                        <TouchableOpacity
-                            style={styles.userBtn}
-                        >
-                            <Text style={styles.userBtnTxt}>Join Chat</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.moduleNumber}>Number of Chat Users: 0
+                        </Text>
+                        {
+                            userData.userChatGroups.includes(module.moduleCode) ?
+                            <TouchableOpacity
+                            style={styles.userBtn2}
+                            >
+                            <Text style={styles.userBtnTxt2}>Chat Joined</Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                            style={styles.userBtn1} onPress={() => joinGroup(module.moduleCode)}
+                            >
+                            <Text style={styles.userBtnTxt1}>Join Chat</Text>
+                            </TouchableOpacity>
+
+                        }
+
                     </View>
                     :
                     <View></View>
@@ -135,7 +197,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         borderRadius: 10,
         flexWrap: 'wrap',
-        top: '14%',
+        top: '11.5%',
         width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
@@ -194,7 +256,7 @@ const styles = StyleSheet.create({
         left: '5%',
         bottom: '5%'
     },
-    userBtn: {
+    userBtn1: {
         bottom: '5%',
         alignSelf: 'center',
         width: 80,
@@ -205,8 +267,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         marginHorizontal: 5,
     },
-    userBtnTxt: {
+    userBtnTxt1: {
     textAlign: 'center',
     color: '#2e64e5',
+    },
+    userBtn2: {
+        bottom: '5%',
+        alignSelf: 'center',
+        width: 80,
+        borderColor: '#2ab05b',
+        borderWidth: 2,
+        borderRadius: 3,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginHorizontal: 5,
+    },
+    userBtnTxt2: {
+    textAlign: 'center',
+    color: '#2ab05b',
     },
 })

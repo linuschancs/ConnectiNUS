@@ -16,7 +16,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function ChatsPage({ navigation }) {
     let auth = getAuth();
-    const db = getFirestore()
+    const db = getFirestore();
     const [user, setUser] = useState('')
     const [userData, setUserData] = useState(null);
     const isFocused = useIsFocused();
@@ -47,11 +47,15 @@ export default function ChatsPage({ navigation }) {
       navigation.navigate('InnerChatsPage', {user, module});
     }
 
-
-
     return (
-        <ScrollView style={styles.body} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ScrollView style={styles.body} contentContainerStyle={{ alignItems: 'center'}}>
           {userData ?
+                    (userData.userChatGroups.length === 0
+                    ? 
+                    <View style={styles.groupPic}>
+                      <Text>You have not joined any chat groups!</Text>
+                    </View>
+                    :
             userData.userChatGroups.map(element => {
               return (                
               <Pressable onPress={() => onPressHandler(element)}
@@ -76,11 +80,9 @@ export default function ChatsPage({ navigation }) {
                   {element}
                 </Text>
               </Pressable>);
-          })
+          }))
           :
-          <View style={styles.groupPic}>
-            <Text style={styles.groupText}>You have not joined any chat groups!</Text>
-          </View>
+          <View></View>
           }
         </ScrollView>
     );
@@ -90,9 +92,11 @@ const styles = StyleSheet.create({
     body: {
       flex:1,
       backgroundColor: '#4B8BDF',
+      paddingTop: 20
     },
     groupPic: {
-
+      justifyContent: 'center',
+      textAlign: 'center'
     },
     button: {
       bottom: '10%',

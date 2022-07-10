@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { StyleSheet, TextInput, View, Button, Pressable, Text } from 'react-native';
-import { app, database, chatsRef } from './firebaseConfig';
+import { app, database} from './firebaseConfig';
 import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
@@ -12,11 +12,14 @@ export default function InnerChatsPage({route, navigation}) {
 
     let auth = getAuth();
     const db = getFirestore()
-    const {user} = route.params;  
+    const {user, module} = route.params;  
     const [messages, setMessages] = useState([])
 
     const [userData, setUserData] = useState(null);
     const isFocused = useIsFocused();
+
+    const moduleRef = collection(doc(collection(db, "chats"), module), "messages");
+    const moduleUsersRef = collection(doc(collection(db, "chats"), module), "users");
     
     const getUser = async() => {
         const docRef = doc(collection(db, "users"), auth.currentUser.uid);
@@ -40,7 +43,7 @@ export default function InnerChatsPage({route, navigation}) {
 
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(chatsRef, (querySnapshot) => {
+        const unsubscribe = onSnapshot(moduleRef, (querySnapshot) => {
             const messagesFirestore = querySnapshot.docChanges()
                 .filter(({ type }) => type === 'added')
                 .map(({ doc }) => {
@@ -65,7 +68,7 @@ export default function InnerChatsPage({route, navigation}) {
 
     async function handleSend(messages) {
         const writes = messages.map(async (m) => {
-            const messageRef = doc(chatsRef)
+            const messageRef = doc(moduleRef)
             try {
                 await setDoc(messageRef, m)
             }
@@ -77,12 +80,13 @@ export default function InnerChatsPage({route, navigation}) {
         await Promise.all(writes)
     }
     const onPressGroup = () => {
-        navigation.navigate('ChatGroupDetails');
+        console.log(module);
+        navigation.navigate('ChatGroupDetails', {module});
     }
     return (
         <View style={{flex: 1}}>
             <Pressable style={styles.header} onPress={onPressGroup}>
-              <Text style={styles.headertext}>CS1101S</Text>
+              <Text style={styles.headertext}>{module}</Text>
             </Pressable>
             <GiftedChat messages={messages} renderUsernameOnMessage={true} onPressAvatar={onPressUser} user={user} onSend={handleSend} />
         </View>
@@ -116,6 +120,6 @@ const styles = StyleSheet.create({
     headertext: {
         fontWeight: 'bold',
         fontSize: 25,
-        top: '40%'
+        top: '50%'
     }
 })

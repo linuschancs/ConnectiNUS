@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import ModData from "./nusMods2022.json";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { collection, getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";   
+import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -54,6 +54,12 @@ export default function SearchPage({ navigation }) {
 
         const joinGroup = (moduleCode) => {
             const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const moduleUsersRef = doc(collection(doc(collection(db, "chats"), moduleCode), "users"), auth.currentUser.uid);
+            setDoc(moduleUsersRef, {
+                displayName: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+            });
             const temp = userData.userChatGroups;
             userData.userChatGroups.push(moduleCode);
             updateDoc(docRef, {
@@ -128,19 +134,20 @@ export default function SearchPage({ navigation }) {
                     <View style={styles.moduleCard}>
                         <Text style={styles.moduleHeader}>{module.moduleCode}</Text>
                         <Text style={styles.moduleInfo}>{module.title}</Text>
-                        <Text style={styles.moduleNumber}>Number of Chat Users: 0</Text>
+                        <Text style={styles.moduleNumber}>Number of Chat Users: 0
+                        </Text>
                         {
                             userData.userChatGroups.includes(module.moduleCode) ?
                             <TouchableOpacity
-                            style={styles.userBtn}
+                            style={styles.userBtn2}
                             >
-                            <Text style={styles.userBtnTxt}>Chat Joined</Text>
+                            <Text style={styles.userBtnTxt2}>Chat Joined</Text>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity
-                            style={styles.userBtn} onPress={() => joinGroup(module.moduleCode)}
+                            style={styles.userBtn1} onPress={() => joinGroup(module.moduleCode)}
                             >
-                            <Text style={styles.userBtnTxt}>Join Chat</Text>
+                            <Text style={styles.userBtnTxt1}>Join Chat</Text>
                             </TouchableOpacity>
 
                         }
@@ -249,7 +256,7 @@ const styles = StyleSheet.create({
         left: '5%',
         bottom: '5%'
     },
-    userBtn: {
+    userBtn1: {
         bottom: '5%',
         alignSelf: 'center',
         width: 80,
@@ -260,8 +267,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         marginHorizontal: 5,
     },
-    userBtnTxt: {
+    userBtnTxt1: {
     textAlign: 'center',
     color: '#2e64e5',
+    },
+    userBtn2: {
+        bottom: '5%',
+        alignSelf: 'center',
+        width: 80,
+        borderColor: '#2ab05b',
+        borderWidth: 2,
+        borderRadius: 3,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginHorizontal: 5,
+    },
+    userBtnTxt2: {
+    textAlign: 'center',
+    color: '#2ab05b',
     },
 })

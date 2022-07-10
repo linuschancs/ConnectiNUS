@@ -134,7 +134,7 @@ export default function SettingsPage({ navigation }) {
       body: {
         flex: 0.6,
         backgroundColor: '#4B8BDF',
-        alignItems: 'left',
+        //alignItems: 'left',
         justifyContent: 'center',
         padding: 10
       },
@@ -164,7 +164,7 @@ export default function SettingsPage({ navigation }) {
         fontWeight: 'bold',
         color: '#FFF',
         margin: 10,
-        alignItems: 'left',
+        //alignItems: 'left',
         justifyContent: 'center',
         
       },

@@ -90,6 +90,8 @@ export function BottomTabNavi({ navigation }) {
             alignSelf: 'center',
             top: 10,
           },
+          tabBarActiveTintColor: '#F4A836',
+          tabBarInactiveTintColor: '#275B9F',
           tabBarStyle: {
             height: '10%',
             position: 'absolute',
@@ -109,7 +111,7 @@ export function BottomTabNavi({ navigation }) {
             if(route.name==='SearchPage') {
               iconName = 'search';
               size = focused ? 25 : 20;
-            } else if (route.name==='ChatsPage') {
+            } else if (route.name==='ChatsPage2') {
               iconName = 'comments';
               size = focused ? 25 : 20;
             } else if (route.name==='FriendsPage') {
@@ -129,17 +131,13 @@ export function BottomTabNavi({ navigation }) {
           }
         })
         }
-        tabBarOptions={{
-          activeTintColor: '#F4A836',
-          inactiveTintColor: '#275B9F',
-        }}
       >
         <Tab.Screen
         name="SearchPage"
         component={SearchPage}
         options = {{title: "Search", tabBarLabel:"Search", headerStyle:{height: '10%'}}}/>
         <Tab.Screen
-        name='ChatsPage'
+        name='ChatsPage2'
         component={ChatsPage}
         options = {{title: "Chats", tabBarLabel:"Chats", headerStyle:{height: '10%'}}}/>
         <Tab.Screen

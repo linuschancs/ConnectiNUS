@@ -8,7 +8,7 @@ import {
     ScrollView,
     SafeAreaView,
   } from 'react-native';
-import { database, collection, getFirestore, query, where, onSnapshot } from "firebase/firestore";   
+import { database, collection, getFirestore, query, where, onSnapshot, getDoc } from "firebase/firestore";   
 import { useIsFocused } from "@react-navigation/native";
 import { Avatar } from 'react-native-paper';
 
@@ -21,13 +21,14 @@ export default function OtherUserProfilePage({ route, navigation }) {
 
     const getUser = async () => {
         const q = query(collection(db, "users"), where("email", "==", user._id));
-        const temp =  await onSnapshot(q, (querySnapshot) => {
+        const temp = await onSnapshot(q, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 setUserData(doc.data());
                 console.log(doc.data());
             });
         });
-      }
+    }
+    
     useEffect(() => {
         if(isFocused) {
           getUser();

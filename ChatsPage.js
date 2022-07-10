@@ -38,14 +38,13 @@ export default function ChatsPage({ navigation }) {
       }, [navigation, isFocused]);
 
 
-    async function onPressHandler() {
+    async function onPressHandler(module) {
       const _id = auth.currentUser.email
       const name = userData ? userData.displayName : 'null' 
       const user = { _id, name }
       await AsyncStorage.setItem('user', JSON.stringify(user))
       setUser(user)
-      navigation.navigate('InnerChatsPage', {user});
-
+      navigation.navigate('InnerChatsPage', {user, module});
     }
 
 
@@ -55,7 +54,7 @@ export default function ChatsPage({ navigation }) {
           {userData ?
             userData.userChatGroups.map(element => {
               return (                
-              <Pressable onPress={onPressHandler}
+              <Pressable onPress={() => onPressHandler(element)}
                 style={({ pressed }) => [
                   { backgroundColor: pressed ? '#ddd' : '#fff' },
                   styles.button,
@@ -70,7 +69,7 @@ export default function ChatsPage({ navigation }) {
                   width: 60,
                   borderRadius: 30,
                   }}>
-                  <Text style={styles.groupText}>CS</Text>
+                  <Text style={styles.groupText}>{element.substring(0,2)}</Text>
                 </View>
 
                 <Text style={styles.text1}>
@@ -80,7 +79,7 @@ export default function ChatsPage({ navigation }) {
           })
           :
           <View style={styles.groupPic}>
-            <Text style={styles.groupText}>THERE IS NO MODULES MAN</Text>
+            <Text style={styles.groupText}>You have not joined any chat groups!</Text>
           </View>
           }
         </ScrollView>

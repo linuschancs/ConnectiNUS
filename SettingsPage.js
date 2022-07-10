@@ -55,7 +55,7 @@ export default function SettingsPage({ navigation }) {
     };
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView
+            <ScrollView style={styles.scroll}
             showsVerticalScrollIndicator={false}>
             <View style={styles.body}>
               <Text style={styles.text2}>
@@ -187,7 +187,10 @@ export default function SettingsPage({ navigation }) {
           paddingHorizontal: 10,
           marginHorizontal: '40%',
           flex: 1,
-          marginTop: '10%'
+          marginTop: '5%',
+          marginBottom: '25%',
+          
+
 
         },
         userBtnTxt: {
@@ -198,5 +201,5 @@ export default function SettingsPage({ navigation }) {
         text1: {
             padding: 20,
             textAlign: 'center',
-        }
+        },
   })

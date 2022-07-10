@@ -27,6 +27,7 @@ import {
           }
       })
       .catch((err) => {
+        console.log(err.message)
         alert('Please ensure your email and password is valid');
       });
     };

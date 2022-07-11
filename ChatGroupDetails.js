@@ -60,14 +60,21 @@ export default function ChatGroupDetails({ route, navigation }) {
             initials += names[names.length - 1].substring(0, 1).toUpperCase();
         }
         return initials;
-      };
-    const onPressOtherUser = () => {
-        const user = null;
+    };
+
+    const onPressOtherUser = (email) => {
+        const user = {
+            _id : email
+        };
         navigation.navigate('OtherUserProfilePage', {user})
     }
 
     const onPressOwnUser = () => {
         navigation.navigate('MyProfilePage')
+    }
+
+    const onPressLeaveChat = () => {
+        navigation.navigate('ChatsPage')
     }
 
     return (
@@ -81,8 +88,7 @@ export default function ChatGroupDetails({ route, navigation }) {
                 <Text style={styles.aboutUser}>{moduleTitle[0].title}</Text>
                 <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => {
-                    }}>
+                    onPress={onPressLeaveChat}>
                     <Text style={styles.userBtnTxt}>Leave Chat</Text>
                 </TouchableOpacity>
             <Text style={styles.usersHeader}>Users</Text>
@@ -105,7 +111,7 @@ export default function ChatGroupDetails({ route, navigation }) {
                                 return (<View></View>);
                             } else {
                                 return (                
-                                    <Pressable style={styles.usersList} onPress={onPressOtherUser}
+                                    <Pressable style={styles.usersList} onPress={() => onPressOtherUser(doc.email.toLowerCase())}
                                       >
                                     <Avatar.Text size={40} label={getInitials(doc.displayName)} style={styles.avatar}/>
                                       <Text style={styles.usersName}>

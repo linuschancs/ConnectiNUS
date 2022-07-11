@@ -53,7 +53,6 @@ function App() {
             headerShown: false
           })}
         />
-
         <Stack.Screen
           name="ChatsPage"
           component={BottomTabNavi}

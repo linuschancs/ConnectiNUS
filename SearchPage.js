@@ -54,12 +54,6 @@ export default function SearchPage({ navigation }) {
 
         const joinGroup = (moduleCode) => {
             const docRef = doc(collection(db, "users"), auth.currentUser.uid);
-            const moduleUsersRef = doc(collection(doc(collection(db, "chats"), moduleCode), "users"), auth.currentUser.uid);
-            setDoc(moduleUsersRef, {
-                displayName: userData.displayName,
-                email: userData.email,
-                uid: userData.uid,
-            });
             const temp = userData.userChatGroups;
             userData.userChatGroups.push(moduleCode);
             updateDoc(docRef, {
@@ -74,6 +68,12 @@ export default function SearchPage({ navigation }) {
                     'You have successfully joined this chat group.'
             );
             })
+            const moduleUsersRef = doc(collection(doc(collection(db, "chats"), moduleCode), "users"), auth.currentUser.uid);
+            setDoc(moduleUsersRef, {
+                displayName: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+            });
         }
         useEffect(() => {
             if(isFocused) {

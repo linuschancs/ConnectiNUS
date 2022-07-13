@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc, getDocs } from 'firebase/firestore';
+import { doc, deleteDoc, getFirestore, collection, getDoc, getDocs, updateDoc, setDoc, increment } from 'firebase/firestore';
 import { useIsFocused } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -60,14 +60,33 @@ export default function ChatGroupDetails({ route, navigation }) {
             initials += names[names.length - 1].substring(0, 1).toUpperCase();
         }
         return initials;
-      };
-    const onPressOtherUser = () => {
-        const user = null;
+    };
+
+    const onPressOtherUser = (email) => {
+        const user = {
+            _id : email
+        };
         navigation.navigate('OtherUserProfilePage', {user})
     }
 
     const onPressOwnUser = () => {
         navigation.navigate('MyProfilePage')
+    }
+
+    const onPressLeaveChat = () => {
+        const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+        const moduleUsersRef = doc(collection(doc(collection(db, "chats"), module), "users"), auth.currentUser.uid);
+        deleteDoc(moduleUsersRef);
+        const temp = userData.userChatGroups;
+        const filtered = temp.filter((element) => {return element != module})
+        updateDoc(docRef, {
+                userChatGroups: filtered,
+        })
+        const moduleRef = doc(collection(db, "chats"), module);
+        setDoc(moduleRef, {
+            counter: increment(-1),
+        }, {merge : true});
+        navigation.navigate('ChatsPage')
     }
 
     return (
@@ -81,8 +100,7 @@ export default function ChatGroupDetails({ route, navigation }) {
                 <Text style={styles.aboutUser}>{moduleTitle[0].title}</Text>
                 <TouchableOpacity
                     style={styles.userBtn}
-                    onPress={() => {
-                    }}>
+                    onPress={onPressLeaveChat}>
                     <Text style={styles.userBtnTxt}>Leave Chat</Text>
                 </TouchableOpacity>
             <Text style={styles.usersHeader}>Users</Text>
@@ -105,7 +123,7 @@ export default function ChatGroupDetails({ route, navigation }) {
                                 return (<View></View>);
                             } else {
                                 return (                
-                                    <Pressable style={styles.usersList} onPress={onPressOtherUser}
+                                    <Pressable style={styles.usersList} onPress={() => onPressOtherUser(doc.email.toLowerCase())}
                                       >
                                     <Avatar.Text size={40} label={getInitials(doc.displayName)} style={styles.avatar}/>
                                       <Text style={styles.usersName}>

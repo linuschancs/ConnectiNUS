@@ -154,8 +154,6 @@ const styles = StyleSheet.create({
       telegramHandleText: {
         textDecorationLine: 'underline',
         color: '#2e64e5'
-
-
       },
 
       timetable: {

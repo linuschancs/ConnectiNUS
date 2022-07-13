@@ -13,7 +13,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query, increment, FieldValue } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
-import { getModularInstance } from '@firebase/util';
 
 export default function SearchPage({ navigation }) {
         const [text, setText] = useState("");

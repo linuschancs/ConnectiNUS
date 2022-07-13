@@ -7,6 +7,7 @@ import {
     StyleSheet,
     ScrollView,
     SafeAreaView,
+    Linking
   } from 'react-native';
 import { database, collection, getFirestore, query, where, onSnapshot, getDoc } from "firebase/firestore";   
 import { useIsFocused } from "@react-navigation/native";
@@ -70,7 +71,7 @@ export default function OtherUserProfilePage({ route, navigation }) {
                 {userData ? (userData.email ? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}
                 {userData ? (userData.email ? <Text>{userData.email}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.telegramHandle ? <Text style={styles.userInfoHeader}>Telegram Handle</Text> : <View></View>): <View></View>}
-                {userData ? (userData.telegramHandle ? <Text>{userData.telegramHandle}</Text> : <View></View>): <View></View>}
+                {userData ? (userData.telegramHandle ? <Text style={styles.telegramHandleText} onPress={() => Linking.openURL('https://t.me/' + userData.telegramHandle)}>{'@' + userData.telegramHandle}</Text> : <View></View>): <View></View>}
             </View>
         </ScrollView>
       </SafeAreaView>
@@ -145,5 +146,9 @@ const styles = StyleSheet.create({
         //flex:1,
         width:200,
         height:100,
+      },
+      telegramHandleText: {
+        textDecorationLine: 'underline',
+        color: '#2e64e5'
       },
 })

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import { doc, deleteDoc, getFirestore, collection, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { doc, deleteDoc, getFirestore, collection, getDoc, getDocs, updateDoc, setDoc, increment } from 'firebase/firestore';
 import { useIsFocused } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -82,6 +82,10 @@ export default function ChatGroupDetails({ route, navigation }) {
         updateDoc(docRef, {
                 userChatGroups: filtered,
         })
+        const moduleRef = doc(collection(db, "chats"), module);
+        setDoc(moduleRef, {
+            counter: increment(-1),
+        }, {merge : true});
         navigation.navigate('ChatsPage')
     }
 

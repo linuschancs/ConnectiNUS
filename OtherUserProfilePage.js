@@ -55,10 +55,8 @@ export default function OtherUserProfilePage({ route, navigation }) {
           showsVerticalScrollIndicator={false}>
           {userData ? (userData.profilePic ? <Avatar.Image size={160} source={{uri: userData.profilePic}} style={{backgroundColor: userData.userColor}}/> : <Avatar.Text size={160} label={getInitials(userData.displayName)} style={{backgroundColor: userData.userColor}}/>): <View></View>}
             <Text style={styles.userName}>{userData ? userData.displayName : 'null'}</Text>
-            <TouchableOpacity
-                style={styles.userBtn}>
-                <Text style={styles.userBtnTxt}>Add Friend</Text>
-            </TouchableOpacity>
+            <View style= {styles.buttoncontainer}>
+            </View>
             <View style={styles.userInfoWrapper}>
                 {userData ? (userData.userStatus ? <Text style={styles.userStatus}>{userData.userStatus}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.NUSModsLink ? <Text style={styles.userInfoHeader}>Timetable</Text> : <View></View>): <View></View>}
@@ -114,14 +112,6 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 10,
       },
-      userBtn: {
-        borderColor: '#2e64e5',
-        borderWidth: 2,
-        borderRadius: 3,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        marginHorizontal: 5,
-      },
       userBtnTxt: {
         color: '#2e64e5',
       },
@@ -151,4 +141,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#2e64e5'
       },
+      buttoncontainer: {
+        flexDirection:'row',
+      }
 })

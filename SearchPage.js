@@ -26,6 +26,9 @@ export default function SearchPage({ navigation }) {
         let auth = getAuth();
         const db = getFirestore();
 
+        const hue = Math.floor(Math.random() * 360);
+        const pastel = 'hsl(' + hue + ', 100%, 80%)';
+
         const getUser = async() => {
             const docRef = doc(collection(db, "users"), auth.currentUser.uid);
             const docSnap = await getDoc(docRef);
@@ -65,7 +68,7 @@ export default function SearchPage({ navigation }) {
       
         }
 
-        const joinGroup = (moduleCode) => {
+        const joinGroup = async (moduleCode) => {
             Alert.alert(
                 'Chat Group Joined!',
                 'You have successfully joined this chat group.'
@@ -82,9 +85,18 @@ export default function SearchPage({ navigation }) {
                 console.log(userData.userChatGroups)
             })
             const moduleRef = doc(collection(db, "chats"), moduleCode);
-            setDoc(moduleRef, {
-                counter: increment(1),
-            }, {merge : true});
+            const docSnap = await getDoc(moduleRef);
+            if (docSnap.exists()) {
+                setDoc(moduleRef, {
+                    counter: increment(1),
+                }, {merge : true});
+            } else {
+                setDoc(moduleRef, {
+                    color: pastel,
+                    counter: increment(1),
+                }, {merge : true});
+                console.log('Added color')
+            }
             getModuleCount(moduleCode);
             const moduleUsersRef = doc(collection(moduleRef, "users"), auth.currentUser.uid);
             setDoc(moduleUsersRef, {

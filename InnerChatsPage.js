@@ -38,9 +38,9 @@ export default function InnerChatsPage({route, navigation}) {
     }, [navigation, isFocused]);
     
     const onPressUser = (user) => {
+        console.log(user)
         navigation.navigate('OtherUserProfilePage', {user})
     }
-
 
     useEffect(() => {
         const unsubscribe = onSnapshot(moduleRef, (querySnapshot) => {
@@ -92,8 +92,6 @@ export default function InnerChatsPage({route, navigation}) {
         </View>
     )
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

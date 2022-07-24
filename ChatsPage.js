@@ -52,7 +52,7 @@ export default function ChatsPage({ navigation }) {
           {userData ?
                     (userData.userChatGroups.length === 0
                     ? 
-                    <View style={styles.groupPic}>
+                    <View style={styles.noChatText}>
                       <Text>You have not joined any chat groups!</Text>
                     </View>
                     :
@@ -94,9 +94,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#4B8BDF',
       paddingTop: 20
     },
-    groupPic: {
+    noChatText: {
       justifyContent: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     button: {
       bottom: '10%',

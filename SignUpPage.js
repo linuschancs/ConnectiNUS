@@ -25,11 +25,11 @@ export default function SignUpPage({ navigation }) {
         console.log("No Display Name")
         alert("Please enter a valid display name.");
       } else if (password1 == password2) {
-        createUserWithEmailAndPassword(auth, email, password1)
+        createUserWithEmailAndPassword(auth, email.toLowerCase(), password1)
         .then((response) => {
            console.log(response.user)
            sendEmailVerification(auth.currentUser);
-           createUserDocument(email, displayName, auth.currentUser.uid, pastel);
+           createUserDocument(email.toLowerCase(), displayName, auth.currentUser.uid, pastel);
            navigation.navigate('SuccessfulSignUpPage');
          })
          .catch((err) => {

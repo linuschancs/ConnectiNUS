@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import ModData from "./nusMods2022.json";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query } from "firebase/firestore";   
+import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query, increment, FieldValue } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -19,6 +19,7 @@ export default function SearchPage({ navigation }) {
         const [filtered, setFiltered] = useState([])
         const [searching, setSearching] = useState(false)
         const [module, setModule] = useState('')
+        const [modulecount, setModuleCount] = useState(0)
         const [userData, setUserData] = useState(null);
         const isFocused = useIsFocused();
         
@@ -33,6 +34,18 @@ export default function SearchPage({ navigation }) {
                 setUserData(docSnap.data());
             } else {
                 console.log('No such User Document')
+            }
+        }
+
+        const getModuleCount = async (item) => {
+            const moduleRef = doc(collection(db, "chats"), item);
+            const docSnap = await getDoc(moduleRef);
+            if( docSnap.exists() ) {
+                console.log('Module Doc Data:', docSnap.data());
+                setModuleCount(docSnap.data().counter);
+            } else {
+                console.log('No such Document')
+                setModuleCount(0);
             }
         }
 
@@ -53,13 +66,11 @@ export default function SearchPage({ navigation }) {
         }
 
         const joinGroup = (moduleCode) => {
+            Alert.alert(
+                'Chat Group Joined!',
+                'You have successfully joined this chat group.'
+            );
             const docRef = doc(collection(db, "users"), auth.currentUser.uid);
-            const moduleUsersRef = doc(collection(doc(collection(db, "chats"), moduleCode), "users"), auth.currentUser.uid);
-            setDoc(moduleUsersRef, {
-                displayName: userData.displayName,
-                email: userData.email,
-                uid: userData.uid,
-            });
             const temp = userData.userChatGroups;
             userData.userChatGroups.push(moduleCode);
             updateDoc(docRef, {
@@ -69,15 +80,23 @@ export default function SearchPage({ navigation }) {
                 getUser();
                 console.log('Chat Group Joined!');
                 console.log(userData.userChatGroups)
-                Alert.alert(
-                    'Chat Group Joined!',
-                    'You have successfully joined this chat group.'
-            );
             })
+            const moduleRef = doc(collection(db, "chats"), moduleCode);
+            setDoc(moduleRef, {
+                counter: increment(1),
+            }, {merge : true});
+            getModuleCount(moduleCode);
+            const moduleUsersRef = doc(collection(moduleRef, "users"), auth.currentUser.uid);
+            setDoc(moduleUsersRef, {
+                displayName: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+            });
         }
         useEffect(() => {
             if(isFocused) {
               getUser();
+              if(module != '') {getModuleCount(module.moduleCode);}
             }
         }, [navigation, isFocused]);
 
@@ -114,7 +133,7 @@ export default function SearchPage({ navigation }) {
 
                         filtered.slice(0,5).map(item => {
                             return (
-                                <TouchableOpacity style={styles.itemView} onPress={() => {setModule(item); setFiltered([]); setSearching(false);}}>
+                                <TouchableOpacity style={styles.itemView} onPress={() => {setModule(item); setFiltered([]); setSearching(false); getModuleCount(item.moduleCode);}}>
                                     <Text style={styles.itemText}>{item.moduleCode}</Text>
                                 </TouchableOpacity>
                             )
@@ -134,7 +153,7 @@ export default function SearchPage({ navigation }) {
                     <View style={styles.moduleCard}>
                         <Text style={styles.moduleHeader}>{module.moduleCode}</Text>
                         <Text style={styles.moduleInfo}>{module.title}</Text>
-                        <Text style={styles.moduleNumber}>Number of Chat Users: 0
+                        <Text style={styles.moduleNumber}>Number of Chat Users: {modulecount}
                         </Text>
                         {
                             userData.userChatGroups.includes(module.moduleCode) ?

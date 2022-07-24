@@ -73,7 +73,7 @@ export default function ChatsPage({ navigation }) {
     }
 
     return (
-        <ScrollView style={styles.body} contentContainerStyle={{ alignItems: 'center'}}>
+        <ScrollView style={styles.body} contentContainerStyle={{ alignItems: 'center' }}>
           {userData ?
                     (userData.userChatGroups.length === 0
                     ? 
@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
       fontSize: 15
     },
     button: {
-      bottom: '10%',
       marginVertical: '5%',
       backgroundColor: '#fff',
       height: 100,

@@ -8,12 +8,16 @@ import {
     ScrollView,
     SafeAreaView,
     onPress,
-    Linking
+    Linking,
+    Modal,
+    Alert,
+    Pressable
   } from 'react-native';
 import { collection, getFirestore, doc, getDoc } from "firebase/firestore";   
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native";
 import { Avatar } from 'react-native-paper';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 
 export default function MyProfilePage({ navigation}) {
@@ -23,7 +27,6 @@ export default function MyProfilePage({ navigation}) {
     const db = getFirestore();
     const [userData, setUserData] = useState(null);
     const isFocused = useIsFocused();
-    
     const getUser = async() => {
         const docRef = doc(collection(db, "users"), auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
@@ -39,6 +42,8 @@ export default function MyProfilePage({ navigation}) {
             getUser();
           }
       }, [navigation, isFocused]);
+
+      const [modalVisible, setModalVisible] = useState(false);
 
       const getInitials = (string) => {
         const names = string.split(' ')
@@ -70,10 +75,39 @@ export default function MyProfilePage({ navigation}) {
             <View style={styles.userInfoWrapper}>
                 {userData ? (userData.userStatus ? <Text style={styles.userStatus}>{userData.userStatus}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.NUSModsLink ? <Text style={styles.userInfoHeader}>Timetable</Text> : <View></View>): <View></View>}
-                {userData ? (userData.NUSModsLink ? <Image style={styles.timetable}
+                {userData ? (userData.NUSModsLink ? 
+
+                <View style={styles.modal}>
+                  <Modal 
+                    animationType="slide"
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                      Alert.alert("Modal has been closed.");
+                      setModalVisible(!modalVisible);
+                    }}
+                  >
+                    <Image style={styles.centeredView}
+                    source={{uri: userData.NUSModsTimetable}}
+                    >
+                    </Image>
+                    <View>
+                    <Pressable
+              style={styles.modalButton}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.modalText}>Close Timetable</Text>
+            </Pressable>
+                    </View>
+                  </Modal>
+
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <Image style={styles.timetable}
                     resizeMode= 'contain'
                     source={{uri: userData.NUSModsTimetable}}>
-                </Image> : <View></View>): <View></View>}
+                </Image>
+                </TouchableOpacity> 
+                </View>
+                : <View></View>): <View></View>}
                 {userData ? (userData.yearMajor ? <Text style={styles.userInfoHeader}>Year, Major</Text> : <View></View>): <View></View>}
                 {userData ? (userData.yearMajor ? <Text>{userData.yearMajor}</Text> : <View></View>): <View></View>}
                 {userData ? (userData.email ? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}
@@ -161,4 +195,32 @@ const styles = StyleSheet.create({
         width:200,
         height:100,
       },
+
+      modalTimetable: {
+        //flex:1,
+        width:350,
+        height:200,
+      },
+
+      centeredView: {
+        transform: [{ rotate: '90deg' }],
+        marginTop:300,
+        marginLeft:-140,
+        height:300,
+        width:650,
+        paddingVertical:-20
+      },
+
+      modalButton: {
+        alignSelf: 'flex-start',
+        borderColor: '#2e64e5',
+        borderWidth: 2,
+        borderRadius: 3,
+      },
+
+      modal: {
+        flexDirection: "row"
+
+      }
+
 })

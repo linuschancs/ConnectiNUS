@@ -90,8 +90,16 @@ export default function SettingsPage({ navigation }) {
       getUser();
     }
     //Timetable
-    const [isSwitchOnTimetable, setIsSwitchOnTimetable] = React.useState(false);
-    const onToggleSwitchTimetable = () => setIsSwitchOnTimetable(!isSwitchOnTimetable);
+    const onToggleSwitchTimetable = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        NUSModsTimetableShow: !userData.NUSModsTimetableShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Sound Notification
     const [isSwitchOnSound, setIsSwitchOnSound] = React.useState(false);
     const onToggleSwitchSound = () => setIsSwitchOnSound(!isSwitchOnSound);
@@ -152,7 +160,7 @@ export default function SettingsPage({ navigation }) {
         
                     <View style={styles.slider}>
                       <Text style={styles.text}> Timetable </Text>
-                      <Switch color={"green"} value={isSwitchOnTimetable} onValueChange={onToggleSwitchTimetable} />
+                      <Switch color={"green"} value={userData.NUSModsTimetableShow} onValueChange={onToggleSwitchTimetable} />
                     </View>
         
                     <View style={styles.body}>

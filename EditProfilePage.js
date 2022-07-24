@@ -9,6 +9,10 @@ import {
     Alert,
   } from 'react-native';
   import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+  import {useLocation} from "react-router-dom";
+  import { URL, URLSearchParams } from 'react-native-url-polyfill';
+
+
 
   import Animated from 'react-native-reanimated';
   import BottomSheet from 'reanimated-bottom-sheet';
@@ -28,6 +32,9 @@ export default function EditProfilePage({ navigation }) {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
+  const queryParams = new URLSearchParams("?term=pizza&location=Bangalore")
+  
+  const [nusModsFinalLink, setNusModsFinalLink] = useState('');
   const [camStatus, camRequestPermission] = ImagePicker.useCameraPermissions();
   const [libStatus, libRequestPermission] = ImagePicker.useMediaLibraryPermissions();
   
@@ -53,12 +60,13 @@ export default function EditProfilePage({ navigation }) {
     if( imgUrl == null && userData.profilePic ) {
       imgUrl = userData.profilePic;
     }
+    getNUSModsTimetable;
     const docRef = doc(collection(db, "users"), auth.currentUser.uid);
     updateDoc(docRef, {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
       yearMajor: userData.yearMajor,
-      //NUSModsTimetable: nusmodsfinallink,
+      NUSModsTimetable: nusModsFinalLink + "'&pixelRatio=1'",
       profilePic: imgUrl,
       telegramHandle: userData.telegramHandle,
       userStatus: userData.userStatus,
@@ -211,9 +219,57 @@ export default function EditProfilePage({ navigation }) {
     
     bs = React.createRef();
     fall = new Animated.Value(1);
-    
-    const getNUSModsTimetable = (sharelink) => {
-      
+
+    const getNUSModsTimetable = () => {
+      let modsLink = userData.NUSModsLink.split('?');
+      let s = "";
+      if (modsLink[0][34] == '1') {
+        s += '{"semester":1, "timetable":{'
+      } else if (modsLink[0][34] == '1') {
+        s += '{"semester":2, "timetable":{'
+      }
+      let modsLink2 = modsLink[1].split('&')
+      let ss = [];
+      for (let i = 0; i < modsLink2.length; i++) {
+        let module = modsLink2[i].split('=');
+        ss.push(module);
+      }
+      for (let i = 0; i < ss.length; i++) {
+        let dummy = ss[i].slice(1,);
+        let a = dummy[0].split(',');
+        for (let j = 0; j < a.length; j++) {
+          s += '"';
+          s += ss[i][0];
+          s += '":{';
+          if (a[j].slice(0,3) == "LEC") {
+            s += '"Lecture":"' + a[j].slice(4,) + '"},'
+          }
+          if (a[j].slice(0,3) == "SEC") {
+            s += '"Sectional Teaching":"' + a[j].slice(4,) + '"},'
+          }
+          if (a[j].slice(0,3) == "TUT") {
+            s += '"Tutorial":"' + a[j].slice(4,) + '"},'
+          }
+          if (a[j].slice(0,3) == "REC") {
+            s += '"Recitation":"' + a[j].slice(4,) + '"},'
+          }
+          if (a[j].slice(0,3) == "LAB") {
+            s += '"Laboratory":"' + a[j].slice(4,) + '"},'
+          }
+        }
+        let final = s.slice(0,-1) + '},"colors":{'
+        for (let i = 0; i < ss.length; i++) {
+          final += '"' + ss[i][0] + '":' + (i+1) + ','
+
+        }
+        let ff = final.slice(0,-1) + '},"hidden":[],"theme":{"id":"eighties","timetableOrientation":"HORIZONTAL","showTitle":false,"_persist":{"version":-1,"rehydrated":true}},"settings":{"mode":"LIGHT"}}' + '&pixelRatio=1';
+        const url = new URL('https://export.nusmods.com/api/export/image?data=' + ff);
+        const urlParams = new URLSearchParams(url.search);
+        const data = urlParams.get("data");
+        setNusModsFinalLink('https://export.nusmods.com/api/export/image?data=' + data);
+        console.log(nusModsFinalLink)
+
+      }
     }
 
     return (
@@ -345,6 +401,14 @@ export default function EditProfilePage({ navigation }) {
                 onPress={handleUpdate}>
                 <Text style={styles.userBtnTxt}>Update</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+                style={styles.userBtn}
+                onPress={getNUSModsTimetable}>
+                <Text style={styles.userBtnTxt}>Update</Text>
+        </TouchableOpacity>
+
+
       </Animated.View>
     </View>
   );
@@ -447,3 +511,4 @@ const styles = StyleSheet.create({
     color: '#2e64e5',
   },
 });
+

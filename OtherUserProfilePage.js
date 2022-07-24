@@ -53,23 +53,23 @@ export default function OtherUserProfilePage({ route, navigation }) {
           style={styles.container}
           contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
           showsVerticalScrollIndicator={false}>
-          {userData ? (userData.profilePic ? <Avatar.Image size={160} source={{uri: userData.profilePic}} style={{backgroundColor: userData.userColor}}/> : <Avatar.Text size={160} label={getInitials(userData.displayName)} style={{backgroundColor: userData.userColor}}/>): <View></View>}
+          {userData ? (userData.profilePic && userData.profilePicShow ? <Avatar.Image size={160} source={{uri: userData.profilePic}} style={{backgroundColor: userData.userColor}}/> : <Avatar.Text size={160} label={getInitials(userData.displayName)} style={{backgroundColor: userData.userColor}}/>): <View></View>}
             <Text style={styles.userName}>{userData ? userData.displayName : 'null'}</Text>
             <View style= {styles.buttoncontainer}>
             </View>
             <View style={styles.userInfoWrapper}>
-                {userData ? (userData.userStatus ? <Text style={styles.userStatus}>{userData.userStatus}</Text> : <View></View>): <View></View>}
-                {userData ? (userData.NUSModsLink ? <Text style={styles.userInfoHeader}>Timetable</Text> : <View></View>): <View></View>}
-                {userData ? (userData.NUSModsLink ? <Image style={styles.timetable}
+                {userData ? (userData.userStatus && userData.userStatusShow? <Text style={styles.userStatus}>{userData.userStatus}</Text> : <View></View>): <View></View>}
+                {userData ? (userData.NUSModsLink && userData.NUSModsTimetableShow ? <Text style={styles.userInfoHeader}>Timetable</Text> : <View></View>): <View></View>}
+                {userData ? (userData.NUSModsLink && userData.NUSModsTimetableShow ? <Image style={styles.timetable}
                     resizeMode= 'contain'
                     source={{uri: userData.NUSModsTimetable}}>
                 </Image> : <View></View>): <View></View>}
-                {userData ? (userData.yearMajor ? <Text style={styles.userInfoHeader}>Year, Major</Text> : <View></View>): <View></View>}
-                {userData ? (userData.yearMajor ? <Text>{userData.yearMajor}</Text> : <View></View>): <View></View>}
-                {userData ? (userData.email ? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}
-                {userData ? (userData.email ? <Text>{userData.email}</Text> : <View></View>): <View></View>}
-                {userData ? (userData.telegramHandle ? <Text style={styles.userInfoHeader}>Telegram Handle</Text> : <View></View>): <View></View>}
-                {userData ? (userData.telegramHandle ? <Text style={styles.telegramHandleText} onPress={() => Linking.openURL('https://t.me/' + userData.telegramHandle)}>{'@' + userData.telegramHandle}</Text> : <View></View>): <View></View>}
+                {userData ? (userData.yearMajor && userData.yearMajorShow? <Text style={styles.userInfoHeader}>Year, Major</Text> : <View></View>): <View></View>}
+                {userData ? (userData.yearMajor && userData.yearMajorShow? <Text>{userData.yearMajor}</Text> : <View></View>): <View></View>}
+                {userData ? (userData.email && userData.emailShow? <Text style={styles.userInfoHeader}>Email</Text> : <View></View>): <View></View>}
+                {userData ? (userData.email && userData.emailShow? <Text>{userData.email}</Text> : <View></View>): <View></View>}
+                {userData ? (userData.telegramHandle && userData.telegramHandleShow? <Text style={styles.userInfoHeader}>Telegram Handle</Text> : <View></View>): <View></View>}
+                {userData ? (userData.telegramHandle && userData.telegramHandleShow? <Text style={styles.telegramHandleText} onPress={() => Linking.openURL('https://t.me/' + userData.telegramHandle)}>{'@' + userData.telegramHandle}</Text> : <View></View>): <View></View>}
             </View>
         </ScrollView>
       </SafeAreaView>

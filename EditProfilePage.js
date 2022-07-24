@@ -30,6 +30,8 @@ export default function EditProfilePage({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [camStatus, camRequestPermission] = ImagePicker.useCameraPermissions();
   const [libStatus, libRequestPermission] = ImagePicker.useMediaLibraryPermissions();
+  
+  //const [nusmodsfinallink, setnusmodsfinallink] = useState('');
 
   const getUser = async() => {
       const docRef = doc(collection(db, "users"), auth.currentUser.uid);
@@ -56,7 +58,7 @@ export default function EditProfilePage({ navigation }) {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
       yearMajor: userData.yearMajor,
-      //NUSModsTimetable: timetableURL,
+      //NUSModsTimetable: nusmodsfinallink,
       profilePic: imgUrl,
       telegramHandle: userData.telegramHandle,
       userStatus: userData.userStatus,
@@ -121,10 +123,6 @@ export default function EditProfilePage({ navigation }) {
   
         setUploading(false);
         setImage(null);
-         Alert.alert(
-           'Image uploaded!',
-           'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-         );
         return url;
   
       } catch (e) {

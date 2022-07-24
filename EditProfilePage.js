@@ -37,6 +37,8 @@ export default function EditProfilePage({ navigation }) {
   const [nusModsFinalLink, setNusModsFinalLink] = useState('');
   const [camStatus, camRequestPermission] = ImagePicker.useCameraPermissions();
   const [libStatus, libRequestPermission] = ImagePicker.useMediaLibraryPermissions();
+  
+  //const [nusmodsfinallink, setnusmodsfinallink] = useState('');
 
   const getUser = async() => {
       const docRef = doc(collection(db, "users"), auth.currentUser.uid);
@@ -129,10 +131,6 @@ export default function EditProfilePage({ navigation }) {
   
         setUploading(false);
         setImage(null);
-         Alert.alert(
-           'Image uploaded!',
-           'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-         );
         return url;
   
       } catch (e) {

@@ -13,6 +13,7 @@ import { BottomTabNavi } from './BottomTabNavi';
 import InnerChatsPage from './InnerChatsPage';
 import OtherUserProfilePage from './OtherUserProfilePage';
 import ChatGroupDetails from './ChatGroupDetails';
+import JoinGroupsNUSMods from './JoinGroupsNUSMods';
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,11 @@ function App() {
         <Stack.Screen
           name="ChatGroupDetails"
           component={ChatGroupDetails}
+        />
+
+        <Stack.Screen
+          name="JoinGroupsNUSMods"
+          component={JoinGroupsNUSMods}
         />
 
       </Stack.Navigator>

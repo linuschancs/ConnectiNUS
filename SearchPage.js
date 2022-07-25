@@ -132,9 +132,6 @@ export default function SearchPage({ navigation }) {
                     color="#fff"
                     style={{
                       opacity: 0.8,
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                      borderRadius: 10,
                     }}
                   />
                 </TouchableOpacity>

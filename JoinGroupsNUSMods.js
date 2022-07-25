@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth } from "firebase/auth";
-import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
+import { collection, getFirestore, doc, getDoc, updateDoc, setDoc, query, increment, FieldValue } from "firebase/firestore";   
 import { useIsFocused } from "@react-navigation/native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -25,14 +25,51 @@ export default function JoinGroupsNUSMods({ navigation }) {
     const [modsLink, setModsLink] = useState(null);
     const isFocused = useIsFocused();
 
-    const handlePress = async() => {
+    const handlePress = () => {
       let mods = modsLink.split('?');
       let mods2 = mods[1].split('&');
-      let finalModuleList = []
+      let finalModuleList = [];
       for (let i = 0; i < mods2.length; i++) {
         let mods3 = mods2[i].split('=');
-        final.push(mods3[0])
+        finalModuleList.push(mods3[0])
       }
+      console.log(finalModuleList);
+      finalModuleList.forEach(async (moduleCode) => {
+            if (userData.userChatGroups.includes(moduleCode)) {
+                return;
+            }
+            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+            const temp = userData.userChatGroups;
+            userData.userChatGroups.push(moduleCode);
+            updateDoc(docRef, {
+                    userChatGroups: temp,
+            })
+            .then(() => {
+                getUser();
+                console.log('Chat Group Joined!');
+                console.log(userData.userChatGroups)
+            })
+            const moduleRef = doc(collection(db, "chats"), moduleCode);
+            const docSnap = await getDoc(moduleRef);
+            if (docSnap.exists()) {
+                setDoc(moduleRef, {
+                    counter: increment(1),
+                }, {merge : true});
+            } else {
+                setDoc(moduleRef, {
+                    color: pastel,
+                    counter: increment(1),
+                }, {merge : true});
+                console.log('Added color')
+            }
+            const moduleUsersRef = doc(collection(moduleRef, "users"), auth.currentUser.uid);
+            setDoc(moduleUsersRef, {
+                displayName: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+            });
+      })
+      navigation.navigate('ChatsPage');
     }
     
     const getUser = async() => {
@@ -50,7 +87,6 @@ export default function JoinGroupsNUSMods({ navigation }) {
       useEffect(() => {
           if(isFocused) {
             getUser();
-            //getColor();
           }
       }, [navigation, isFocused]);
 

@@ -100,15 +100,6 @@ export default function SettingsPage({ navigation }) {
       })
       getUser();
     }
-    //Sound Notification
-    const [isSwitchOnSound, setIsSwitchOnSound] = React.useState(false);
-    const onToggleSwitchSound = () => setIsSwitchOnSound(!isSwitchOnSound);
-    //Vibration Notification
-    const [isSwitchOnVibration, setIsSwitchOnVibration] = React.useState(false);
-    const onToggleSwitchVibration = () => setIsSwitchOnVibration(!isSwitchOnVibration);
-    //Message Preview
-    const [isSwitchOnMessage, setIsSwitchOnMessage] = React.useState(false);
-    const onToggleSwitchMessage = () => setIsSwitchOnMessage(!isSwitchOnMessage);
     
     const logout = () => {
         auth.signOut()
@@ -130,7 +121,8 @@ export default function SettingsPage({ navigation }) {
                 <View style={styles.body}>
                   <Text style={styles.text2}>
                     Privacy
-                  </Text>   
+                  </Text> 
+                  <Text style ={styles.text3}>Toggle what information you would like to be visible to other users!</Text>
               </View>
                       <View style={styles.slider}>
                       <Text style={styles.text}> Display Picture </Text>
@@ -162,28 +154,6 @@ export default function SettingsPage({ navigation }) {
                       <Text style={styles.text}> Timetable </Text>
                       <Switch color={"green"} value={userData.NUSModsTimetableShow} onValueChange={onToggleSwitchTimetable} />
                     </View>
-        
-                    <View style={styles.body}>
-                      <Text style={styles.text2}>
-                        Notifications
-                      </Text>   
-                    </View>
-        
-                    <View style={styles.slider}>
-                      <Text style={styles.text}> Sound Notification </Text>
-                      <Switch color={"green"} value={isSwitchOnSound} onValueChange={onToggleSwitchSound} />
-                    </View>
-        
-                    <View style={styles.slider}>
-                      <Text style={styles.text}> Vibration Notification </Text>
-                      <Switch color={"green"} value={isSwitchOnVibration} onValueChange={onToggleSwitchVibration} />
-                    </View>
-        
-                    <View style={styles.slider}>
-                      <Text style={styles.text}> Message Preview </Text>
-                      <Switch color={"green"} value={isSwitchOnMessage} onValueChange={onToggleSwitchMessage} />
-                    </View>
-        
         
                     <TouchableOpacity
                         style={styles.userBtn}
@@ -220,11 +190,8 @@ export default function SettingsPage({ navigation }) {
         backgroundColor: '#4B8BDF',
 
         },
-      clown: {
-        alignSelf: "flex-end",
-        justifyContent: 'flex-end',
-
-
+      scroll: {
+        //top: '5%'
       },
       text: {
         color: '#FFF',
@@ -236,21 +203,26 @@ export default function SettingsPage({ navigation }) {
       text2: {
         fontSize: 20,
         fontWeight: 'bold',
-        fontSize: 20,
-        fontWeight: 'bold',
         color: '#FFF',
         margin: 10,
         //alignItems: 'left',
         justifyContent: 'center',
-        
+        marginTop: '5%'
       },
-
+      text3: {
+        fontSize: 15,
+        marginTop: 10,
+        marginLeft: 10,
+        color: '#FFF',
+        fontStyle: 'italic'
+      },
       slider: {
         flex : 0.5,
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        padding: 5
+        padding: 5,
+        marginVertical: 10
       },
 
 

@@ -5,14 +5,14 @@ import {
   View,
   Text,
   Pressable,
-  ScrollView
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth } from "firebase/auth";
 import { doc, onSnapshot, query, where, setDoc, Timestamp, getFirestore, collection, getDoc } from 'firebase/firestore';
 import { useIsFocused } from "@react-navigation/native";
-import { FlipInYRight } from 'react-native-reanimated';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 export default function ChatsPage({ navigation }) {
@@ -74,6 +74,22 @@ export default function ChatsPage({ navigation }) {
 
     return (
         <ScrollView style={styles.body} contentContainerStyle={{ alignItems: 'center' }}>
+            <TouchableOpacity
+                style={styles.userBtn}
+                onPress={() => {
+                  navigation.navigate('JoinGroupsNUSMods');
+                }}>
+                  <FontAwesome5
+                    name="plus"
+                    size={30}
+                    color="#fff"
+                    style={{
+                      opacity: 0.8,
+                      borderColor: '#fff',
+                      borderRadius: 10,
+                    }}
+                  />
+            </TouchableOpacity>
           {userData ?
                     (userData.userChatGroups.length === 0
                     ? 
@@ -109,6 +125,7 @@ export default function ChatsPage({ navigation }) {
           :
           <View></View>
           }
+
         </ScrollView>
     );
 }
@@ -149,5 +166,9 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       top: '20%',
       fontSize: 30
-    }
+    },
+    userBtn: {
+      alignSelf: 'flex-end',
+      marginRight: 20
+    },
 })

@@ -6,6 +6,7 @@ import {
   Text,
   Pressable,
   ScrollView,
+  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,8 +21,19 @@ export default function JoinGroupsNUSMods({ navigation }) {
     const db = getFirestore();
     const [user, setUser] = useState('')
     const [userData, setUserData] = useState(null);
-    //const [moduleColor, setModuleColor] = useState({});
+
+    const [modsLink, setModsLink] = useState(null);
     const isFocused = useIsFocused();
+
+    const handlePress = async() => {
+      let mods = modsLink.split('?');
+      let mods2 = mods[1].split('&');
+      let finalModuleList = []
+      for (let i = 0; i < mods2.length; i++) {
+        let mods3 = mods2[i].split('=');
+        final.push(mods3[0])
+      }
+    }
     
     const getUser = async() => {
         const docRef = doc(collection(db, "users"), auth.currentUser.uid);
@@ -34,6 +46,7 @@ export default function JoinGroupsNUSMods({ navigation }) {
             return '#fff'
         }
       }
+
       useEffect(() => {
           if(isFocused) {
             getUser();
@@ -42,49 +55,74 @@ export default function JoinGroupsNUSMods({ navigation }) {
       }, [navigation, isFocused]);
 
     return (
-        <View></View>
+        <View style={styles.body}>
+          <Text style={styles.text}>Enter your NUSMods Sharing Link Below!</Text>
+          <View style={styles.input}>
+
+          <TextInput 
+            placeholder="NUSMods Sharing Link"
+            placeholderTextColor="#666666"
+            onChangeText={text => setModsLink(text)}
+            autoCorrect={false}
+            style={styles.textInput}
+          />
+
+          </View>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={handlePress}>
+            <Text style={styles.userBtnTxt}>Join Groups</Text>
+          </TouchableOpacity>
+
+
+        </View>
     );
 }
+
+
 
 const styles = StyleSheet.create({
     body: {
       flex:1,
-      backgroundColor: '#4B8BDF',
-      paddingTop: 20
+      paddingTop: 20,
+      justifyContent:'center',
+      alignItems: 'center',
     },
-    noChatText: {
-      justifyContent: 'center',
-      textAlign: 'center',
-      marginTop: '50%'
-    },
-    noChatText2: {
-      justifyContent: 'center',
-      textAlign: 'center',
-      fontWeight: 'bold',
-      fontSize: 15
-    },
-    button: {
-      marginVertical: '5%',
-      backgroundColor: '#fff',
-      height: 100,
-      width: 300,
-      borderRadius: 20,
-      shadowOpacity: 0.3,
-    },
-    text1: {
-      position: 'absolute',
-      top: '30%',
-      fontWeight: 'bold',
-      fontSize: 30,
-      left: '30%',
-    },
-    groupText: {
-      textAlign: 'center',
-      top: '20%',
-      fontSize: 30
-    },
+
     userBtn: {
-      alignSelf: 'flex-end',
-      marginRight: 20
+      justifyContent:'center',
+      alignSelf: 'center',
+      width: 80,
+      borderColor: '#2e64e5',
+      borderWidth: 2,
+      borderRadius: 3,
+      paddingVertical: 8,
+      paddingHorizontal: 5,
+      marginHorizontal: 5,
     },
+    userBtnTxt: {
+      textAlign: 'center',
+      color: '#2e64e5',
+    },
+    action: {
+      flexDirection: 'row',
+      marginTop: 10,
+      marginBottom: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#f2f2f2',
+      paddingBottom: 5,
+    },
+    text: {
+      padding:20
+    },
+    textInput: {
+      fontSize: 15,
+      borderColor: 'gray', borderWidth: 2,
+      padding:10
+    },
+    input: {
+      paddingBottom:20,
+      width: 250,
+    }
+
 })

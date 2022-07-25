@@ -73,7 +73,7 @@ export default function ChatsPage({ navigation }) {
     }
 
     return (
-        <ScrollView style={styles.body} contentContainerStyle={{ alignItems: 'center' }}>
+        <ScrollView style={styles.body}>
             <TouchableOpacity
                 style={styles.userBtn}
                 onPress={() => {
@@ -125,7 +125,7 @@ export default function ChatsPage({ navigation }) {
           :
           <View></View>
           }
-
+          <View style={styles.empty}></View>
         </ScrollView>
     );
 }
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     },
     button: {
       marginVertical: '5%',
+      alignSelf: 'center',
       backgroundColor: '#fff',
       height: 100,
       width: 300,
@@ -171,4 +172,7 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       marginRight: 20
     },
+    empty: {
+      margin: 80
+    }
 })

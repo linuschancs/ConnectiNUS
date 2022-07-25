@@ -117,10 +117,11 @@ export default function SearchPage({ navigation }) {
             <View style={styles.container}>
                 <TextInput
                 style={styles.textInput}
-                placeholder="Search..."
+                placeholder="Enter your Module Code..."
                 placeholderTextColor='white'
                 value={text}
                 onChangeText={(value) => {onSearch(value); setText(value);}}
+                color = 'white'
                 />
                 <TouchableOpacity
                 style={styles.clearButton}
@@ -199,7 +200,9 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-        backgroundColor: '#BFBFBF',
+        //backgroundColor: '#BFBFBF',
+        borderColor: 'white',
+        borderWidth: 1.5,
         width: '100%',
         borderRadius: 10,
         height: 50,
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
     },
     subContainer: {
         position: 'absolute',
-        backgroundColor: '#84DCC6',
+        backgroundColor: '#A7C7E7',
         marginHorizontal: 20,
         borderRadius: 10,
         flexWrap: 'wrap',

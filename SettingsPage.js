@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,29 +8,98 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
+import { collection, getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";   
+import { getAuth } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 import { Switch } from 'react-native-paper';
-import { getAuth} from "firebase/auth";
 
 export default function SettingsPage({ navigation }) {
     let auth = getAuth();
+    const db = getFirestore();
+    const [userData, setUserData] = useState(null);
+    const isFocused = useIsFocused();
+    
+    const getUser = async() => {
+        const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if( docSnap.exists() ) {
+            console.log('User Data:', docSnap.data());
+            setUserData(docSnap.data());
+        } else {
+            console.log('No such User Document')
+        }
+    }
+    useEffect(() => {
+        if(isFocused) {
+          getUser();
+        }
+    }, [navigation, isFocused]);
     //Display Picture
-    const [isSwitchOnDisplayPic, setIsSwitchOnDisplayPic] = React.useState(false);
-    const onToggleSwitchDisplayPic = () => setIsSwitchOnDisplayPic(!isSwitchOnDisplayPic);
+    const onToggleSwitchDisplayPic = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        profilePicShow: !userData.profilePicShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Status
-    const [isSwitchOnStatus, setIsSwitchOnStatus] = React.useState(false);
-    const onToggleSwitchStatus = () => setIsSwitchOnStatus(!isSwitchOnStatus);
+    const onToggleSwitchStatus = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        userStatusShow: !userData.userStatusShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Basic Information
-    const [isSwitchOnBasicInfo, setIsSwitchOnBasicInfo] = React.useState(false);
-    const onToggleSwitchBasicInfo = () => setIsSwitchOnBasicInfo(!isSwitchOnBasicInfo);  
+    const onToggleSwitchBasicInfo = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        yearMajorShow: !userData.yearMajorShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Email Address
-    const [isSwitchOnEmail, setIsSwitchOnEmail] = React.useState(false);
-    const onToggleSwitchEmail = () => setIsSwitchOnEmail(!isSwitchOnEmail);        
+    const onToggleSwitchEmail = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        emailShow: !userData.emailShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }       
     //Telegram Handle
-    const [isSwitchOnTele, setIsSwitchOnTele] = React.useState(false);
-    const onToggleSwitchTele = () => setIsSwitchOnTele(!isSwitchOnTele);
+    const onToggleSwitchTele = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        telegramHandleShow: !userData.telegramHandleShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Timetable
-    const [isSwitchOnTimetable, setIsSwitchOnTimetable] = React.useState(false);
-    const onToggleSwitchTimetable = () => setIsSwitchOnTimetable(!isSwitchOnTimetable);
+    const onToggleSwitchTimetable = () => {
+      const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+      updateDoc(docRef, {
+        NUSModsTimetableShow: !userData.NUSModsTimetableShow,
+      })
+      .then(() => {
+        console.log('User Updated!');
+      })
+      getUser();
+    }
     //Sound Notification
     const [isSwitchOnSound, setIsSwitchOnSound] = React.useState(false);
     const onToggleSwitchSound = () => setIsSwitchOnSound(!isSwitchOnSound);
@@ -55,76 +124,83 @@ export default function SettingsPage({ navigation }) {
     };
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scroll}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.body}>
-              <Text style={styles.text2}>
-                Privacy
-              </Text>   
-            </View>
+            { userData ? 
+              <ScrollView style={styles.scroll}
+              showsVerticalScrollIndicator={false}>
+                <View style={styles.body}>
+                  <Text style={styles.text2}>
+                    Privacy
+                  </Text>   
+              </View>
+                      <View style={styles.slider}>
+                      <Text style={styles.text}> Display Picture </Text>
+                    
+                      <Switch color={"green"} value={userData.profilePicShow} onValueChange={onToggleSwitchDisplayPic} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Status </Text>
+                      <Switch color={"green"} value={userData.userStatusShow} onValueChange={onToggleSwitchStatus} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Basic Information (Year, Major) </Text>
+                      <Switch color={"green"} value={userData.yearMajorShow} onValueChange={onToggleSwitchBasicInfo} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Email Address </Text>
+                      <Switch color={"green"} value={userData.emailShow} onValueChange={onToggleSwitchEmail} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Telegram Handle </Text>
+                      <Switch color={"green"} value={userData.telegramHandleShow} onValueChange={onToggleSwitchTele} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Timetable </Text>
+                      <Switch color={"green"} value={userData.NUSModsTimetableShow} onValueChange={onToggleSwitchTimetable} />
+                    </View>
+        
+                    <View style={styles.body}>
+                      <Text style={styles.text2}>
+                        Notifications
+                      </Text>   
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Sound Notification </Text>
+                      <Switch color={"green"} value={isSwitchOnSound} onValueChange={onToggleSwitchSound} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Vibration Notification </Text>
+                      <Switch color={"green"} value={isSwitchOnVibration} onValueChange={onToggleSwitchVibration} />
+                    </View>
+        
+                    <View style={styles.slider}>
+                      <Text style={styles.text}> Message Preview </Text>
+                      <Switch color={"green"} value={isSwitchOnMessage} onValueChange={onToggleSwitchMessage} />
+                    </View>
+        
+        
+                    <TouchableOpacity
+                        style={styles.userBtn}
+                        onPress={() => {
+                        logout();
+                        }}>
+                        <Text style={styles.userBtnTxt}>Logout</Text>
+                          
+                  </TouchableOpacity>
+                  </ScrollView>
 
-            <View style={styles.slider}>
-              <Text style={styles.text}> Display Picture </Text>
-            
-              <Switch color={"green"} value={isSwitchOnDisplayPic} onValueChange={onToggleSwitchDisplayPic} />
-            </View>
+            :
+            <View></View>
 
-            <View style={styles.slider}>
-              <Text style={styles.text}> Status </Text>
-              <Switch color={"green"} value={isSwitchOnStatus} onValueChange={onToggleSwitchStatus} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Basic Information (Year, Major) </Text>
-              <Switch color={"green"} value={isSwitchOnBasicInfo} onValueChange={onToggleSwitchBasicInfo} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Email Address </Text>
-              <Switch color={"green"} value={isSwitchOnEmail} onValueChange={onToggleSwitchEmail} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Telegram Handle </Text>
-              <Switch color={"green"} value={isSwitchOnTele} onValueChange={onToggleSwitchTele} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Timetable </Text>
-              <Switch color={"green"} value={isSwitchOnTimetable} onValueChange={onToggleSwitchTimetable} />
-            </View>
-
-            <View style={styles.body}>
-              <Text style={styles.text2}>
-                Notifications
-              </Text>   
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Sound Notification </Text>
-              <Switch color={"green"} value={isSwitchOnSound} onValueChange={onToggleSwitchSound} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Vibration Notification </Text>
-              <Switch color={"green"} value={isSwitchOnVibration} onValueChange={onToggleSwitchVibration} />
-            </View>
-
-            <View style={styles.slider}>
-              <Text style={styles.text}> Message Preview </Text>
-              <Switch color={"green"} value={isSwitchOnMessage} onValueChange={onToggleSwitchMessage} />
-            </View>
+            }
 
 
-            <TouchableOpacity
-                style={styles.userBtn}
-                onPress={() => {
-                logout();
-                }}>
-                <Text style={styles.userBtnTxt}>Logout</Text>
-                
-            </TouchableOpacity>
-            </ScrollView>
 
         </SafeAreaView>
       );

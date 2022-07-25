@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ChatsPage from './ChatsPage';
 import SearchPage from './SearchPage';
 import SettingsPage from './SettingsPage';
-import FriendsPage from './FriendsPage';
+//import FriendsPage from './FriendsPage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Avatar } from 'react-native-paper';
 
@@ -114,9 +114,6 @@ export function BottomTabNavi({ navigation }) {
             } else if (route.name==='ChatsPage2') {
               iconName = 'comments';
               size = focused ? 25 : 20;
-            } else if (route.name==='FriendsPage') {
-              iconName = 'user-friends';
-              size = focused ? 25 : 20;
             } else if (route.name==='SettingsPage') {
               iconName = 'cog';
               size = focused ? 25 : 20;
@@ -140,10 +137,6 @@ export function BottomTabNavi({ navigation }) {
         name='ChatsPage2'
         component={ChatsPage}
         options = {{title: "Chats", tabBarLabel:"Chats", headerStyle:{height: '10%'}}}/>
-        <Tab.Screen
-        name="FriendsPage"
-        component={FriendsPage}
-        options = {{title: "Friends", tabBarLabel:"Friends", headerStyle:{height: '10%'}}}/>
         <Tab.Screen
         name='SettingsPage'
         component={SettingsPage}

@@ -32,7 +32,6 @@ export default function EditProfilePage({ navigation }) {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
-  const queryParams = new URLSearchParams("?term=pizza&location=Bangalore")
   
   const [nusModsFinalLink, setNusModsFinalLink] = useState('');
   const [camStatus, camRequestPermission] = ImagePicker.useCameraPermissions();
@@ -66,7 +65,7 @@ export default function EditProfilePage({ navigation }) {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
       yearMajor: userData.yearMajor,
-      NUSModsTimetable: nusModsFinalLink + "'&pixelRatio=1'",
+      NUSModsTimetable: nusModsFinalLink + "&pixelRatio=1",
       profilePic: imgUrl,
       telegramHandle: userData.telegramHandle,
       userStatus: userData.userStatus,
@@ -265,9 +264,8 @@ export default function EditProfilePage({ navigation }) {
         let ff = final.slice(0,-1) + '},"hidden":[],"theme":{"id":"eighties","timetableOrientation":"HORIZONTAL","showTitle":false,"_persist":{"version":-1,"rehydrated":true}},"settings":{"mode":"LIGHT"}}' + '&pixelRatio=1';
         const url = new URL('https://export.nusmods.com/api/export/image?data=' + ff);
         const urlParams = new URLSearchParams(url.search);
-        const data = urlParams.get("data");
+        const data = urlParams.get('data');
         setNusModsFinalLink('https://export.nusmods.com/api/export/image?data=' + data);
-        console.log(nusModsFinalLink)
 
       }
     }
@@ -399,12 +397,6 @@ export default function EditProfilePage({ navigation }) {
         <TouchableOpacity
                 style={styles.userBtn}
                 onPress={handleUpdate}>
-                <Text style={styles.userBtnTxt}>Update</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-                style={styles.userBtn}
-                onPress={getNUSModsTimetable}>
                 <Text style={styles.userBtnTxt}>Update</Text>
         </TouchableOpacity>
 

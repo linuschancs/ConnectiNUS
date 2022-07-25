@@ -188,8 +188,6 @@ const styles = StyleSheet.create({
     },
     usersList: {
         flexDirection: 'row',
-        borderColor: '#567',
-        borderWidth: 1,
         alignSelf: 'flex-start',
         marginBottom: 10,
     },

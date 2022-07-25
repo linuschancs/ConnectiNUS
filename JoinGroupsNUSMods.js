@@ -15,7 +15,7 @@ import { useIsFocused } from "@react-navigation/native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
-export default function joinGroupsNUSMods({ navigation }) {
+export default function JoinGroupsNUSMods({ navigation }) {
     let auth = getAuth();
     const db = getFirestore();
     const [user, setUser] = useState('')

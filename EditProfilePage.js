@@ -55,12 +55,12 @@ export default function EditProfilePage({ navigation }) {
       return;
     }
     let imgUrl = await uploadImage();
-    
     if( imgUrl == null && userData.profilePic ) {
       imgUrl = userData.profilePic;
     }
     getNUSModsTimetable;
     const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+    console.log(nusModsFinalLink)
     updateDoc(docRef, {
       displayName: userData.displayName,
       NUSModsLink: userData.NUSModsLink,
@@ -224,7 +224,7 @@ export default function EditProfilePage({ navigation }) {
       let s = "";
       if (modsLink[0][34] == '1') {
         s += '{"semester":1, "timetable":{'
-      } else if (modsLink[0][34] == '1') {
+      } else if (modsLink[0][34] == '2') {
         s += '{"semester":2, "timetable":{'
       }
       let modsLink2 = modsLink[1].split('&')
@@ -266,7 +266,6 @@ export default function EditProfilePage({ navigation }) {
         const urlParams = new URLSearchParams(url.search);
         const data = urlParams.get('data');
         setNusModsFinalLink('https://export.nusmods.com/api/export/image?data=' + data);
-
       }
     }
 

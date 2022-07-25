@@ -212,7 +212,8 @@ const styles = StyleSheet.create({
       },
 
       modalButton: {
-        alignSelf: 'flex-start',
+        alignSelf: 'center',
+        bottom: 525,
         borderColor: '#2e64e5',
         borderWidth: 2,
         borderRadius: 3,
@@ -221,6 +222,9 @@ const styles = StyleSheet.create({
       modal: {
         flexDirection: "row"
 
+      },
+      modalText: {
+        padding: 5
       }
 
 })

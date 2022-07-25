@@ -224,7 +224,7 @@ export default function EditProfilePage({ navigation }) {
       let s = "";
       if (modsLink[0][34] == '1') {
         s += '{"semester":1, "timetable":{'
-      } else if (modsLink[0][34] == '1') {
+      } else if (modsLink[0][34] == '2') {
         s += '{"semester":2, "timetable":{'
       }
       let modsLink2 = modsLink[1].split('&')

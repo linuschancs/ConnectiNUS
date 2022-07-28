@@ -17,9 +17,10 @@ export default function PasswordResetPage({ navigation }) {
     const [email, setEmail] = useState('')
 
     const onPressForgetPassword = () => {
-        sendPasswordResetEmail(auth, email)
+        sendPasswordResetEmail(auth, email.toLowerCase())
         .then(() => {
           // password reset email sent successfully
+          console.log(email.toLowerCase())
           alert("A password reset link has been sent to your email!");
           navigation.navigate('LoginDetailsPage')
         })
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     margin: 10,
-    alignItems: 'Center',
+    alignItems: 'center',
     justifyContent: 'Center',
   },
 
@@ -154,8 +155,8 @@ const styles = StyleSheet.create({
     height: 35,
     margin: 5,
     padding:10,
-    alignItems: 'Center',
-    justifyContent: 'Center',
+    alignItems: 'center',
+    justifyContent: 'center',
 
   },
 

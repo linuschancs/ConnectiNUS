@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     margin: 10,
     alignItems: 'center',
-    justifyContent: 'Center',
+    justifyContent: 'center',
   },
 
   nusLogo: {

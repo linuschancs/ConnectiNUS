@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth } from "firebase/auth";
@@ -26,6 +27,13 @@ export default function JoinGroupsNUSMods({ navigation }) {
     const isFocused = useIsFocused();
 
     const handlePress = () => {
+        if (modsLink.length < 30) {
+            Alert.alert("Invalid Link Error", "Please enter a valid NUS Mods Sharing Link");
+            return;
+        } else if (modsLink.substring(0,30) != "https://nusmods.com/timetable/") {
+            Alert.alert("Invalid Link Error", "Please enter a valid NUS Mods Sharing Link");
+            return;
+        }
       let mods = modsLink.split('?');
       let mods2 = mods[1].split('&');
       let finalModuleList = [];
@@ -35,39 +43,39 @@ export default function JoinGroupsNUSMods({ navigation }) {
       }
       console.log(finalModuleList);
       finalModuleList.forEach(async (moduleCode) => {
-            if (userData.userChatGroups.includes(moduleCode)) {
-                return;
-            }
-            const docRef = doc(collection(db, "users"), auth.currentUser.uid);
-            const temp = userData.userChatGroups;
-            userData.userChatGroups.push(moduleCode);
-            updateDoc(docRef, {
-                    userChatGroups: temp,
-            })
-            .then(() => {
-                getUser();
-                console.log('Chat Group Joined!');
-                console.log(userData.userChatGroups)
-            })
-            const moduleRef = doc(collection(db, "chats"), moduleCode);
-            const docSnap = await getDoc(moduleRef);
-            if (docSnap.exists()) {
-                setDoc(moduleRef, {
-                    counter: increment(1),
-                }, {merge : true});
-            } else {
-                setDoc(moduleRef, {
-                    color: pastel,
-                    counter: increment(1),
-                }, {merge : true});
-                console.log('Added color')
-            }
-            const moduleUsersRef = doc(collection(moduleRef, "users"), auth.currentUser.uid);
-            setDoc(moduleUsersRef, {
-                displayName: userData.displayName,
-                email: userData.email,
-                uid: userData.uid,
-            });
+        if (userData.userChatGroups.includes(moduleCode)) {
+            return;
+        }
+        const docRef = doc(collection(db, "users"), auth.currentUser.uid);
+        const temp = userData.userChatGroups;
+        userData.userChatGroups.push(moduleCode);
+        updateDoc(docRef, {
+                userChatGroups: temp,
+        })
+        .then(() => {
+            getUser();
+            console.log('Chat Group Joined!');
+            console.log(userData.userChatGroups)
+        })
+        const moduleRef = doc(collection(db, "chats"), moduleCode);
+        const docSnap = await getDoc(moduleRef);
+        if (docSnap.exists()) {
+            setDoc(moduleRef, {
+                counter: increment(1),
+            }, {merge : true});
+        } else {
+            setDoc(moduleRef, {
+                color: pastel,
+                counter: increment(1),
+            }, {merge : true});
+            console.log('Added color')
+        }
+        const moduleUsersRef = doc(collection(moduleRef, "users"), auth.currentUser.uid);
+        setDoc(moduleUsersRef, {
+            displayName: userData.displayName,
+            email: userData.email,
+            uid: userData.uid,
+        });
       })
       navigation.navigate('ChatsPage');
     }

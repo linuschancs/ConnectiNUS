@@ -17,9 +17,10 @@ export default function PasswordResetPage({ navigation }) {
     const [email, setEmail] = useState('')
 
     const onPressForgetPassword = () => {
-        sendPasswordResetEmail(auth, email)
+        sendPasswordResetEmail(auth, email.toLowerCase())
         .then(() => {
           // password reset email sent successfully
+          console.log(email.toLowerCase())
           alert("A password reset link has been sent to your email!");
           navigation.navigate('LoginDetailsPage')
         })

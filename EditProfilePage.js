@@ -12,8 +12,6 @@ import {
   import {useLocation} from "react-router-dom";
   import { URL, URLSearchParams } from 'react-native-url-polyfill';
 
-
-
   import Animated from 'react-native-reanimated';
   import BottomSheet from 'reanimated-bottom-sheet';
   import * as ImagePicker from 'expo-image-picker';
@@ -220,7 +218,16 @@ export default function EditProfilePage({ navigation }) {
     fall = new Animated.Value(1);
 
     const getNUSModsTimetable = () => {
-      let modsLink = userData.NUSModsLink.split('?');
+      if (modsLink.length < 30) {
+        Alert.alert("Invalid Link Error", "Please enter a valid NUS Mods Sharing Link");
+        setNusModsFinalLink("")
+        return;
+      } else if (modsLink.substring(0,30) != "https://nusmods.com/timetable/") {
+          Alert.alert("Invalid Link Error", "Please enter a valid NUS Mods Sharing Link");
+          setNusModsFinalLink("")
+          return;
+      }
+        let modsLink = userData.NUSModsLink.split('?');
       let s = "";
       if (modsLink[0][34] == '1') {
         s += '{"semester":1, "timetable":{'
